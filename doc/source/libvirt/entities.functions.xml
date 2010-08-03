@@ -6,6 +6,7 @@
 &reference.libvirt.functions.libvirt-domain-destroy;
 &reference.libvirt.functions.libvirt-domain-get-id;
 &reference.libvirt.functions.libvirt-domain-get-info;
+&reference.libvirt.functions.libvirt-domain-get-job-info;
 &reference.libvirt.functions.libvirt-domain-get-name;
 &reference.libvirt.functions.libvirt-domain-get-uuid-string;
 &reference.libvirt.functions.libvirt-domain-get-uuid;
@@ -17,6 +18,8 @@
 &reference.libvirt.functions.libvirt-domain-lookup-by-uuid;
 &reference.libvirt.functions.libvirt-domain-memory-peek;
 &reference.libvirt.functions.libvirt-domain-memory-stats;
+&reference.libvirt.functions.libvirt-domain-migrate-to-uri;
+&reference.libvirt.functions.libvirt-domain-migrate;
 &reference.libvirt.functions.libvirt-domain-reboot;
 &reference.libvirt.functions.libvirt-domain-resume;
 &reference.libvirt.functions.libvirt-domain-shutdown;
