@@ -17,7 +17,7 @@ ZEND_END_MODULE_GLOBALS(libvirt)
 #define LIBVIRT_G(v) (libvirt_globals.v)
 #endif
 
-#define PHP_LIBVIRT_WORLD_VERSION "0.3"
+#define PHP_LIBVIRT_WORLD_VERSION "0.4"
 #define PHP_LIBVIRT_WORLD_EXTNAME "libvirt"
 
 
@@ -83,6 +83,11 @@ PHP_FUNCTION(libvirt_domain_memory_stats);
 PHP_FUNCTION(libvirt_domain_block_stats);
 PHP_FUNCTION(libvirt_domain_interface_stats);
 PHP_FUNCTION(libvirt_version);
+PHP_FUNCTION(libvirt_domain_migrate);
+#if LIBVIR_VERSION_NUMBER>=7007
+PHP_FUNCTION(libvirt_domain_get_job_info);
+#endif
+PHP_FUNCTION(libvirt_domain_migrate_to_uri);
 
  
 

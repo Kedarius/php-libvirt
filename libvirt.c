@@ -58,6 +58,12 @@ static function_entry libvirt_functions[] = {
      PHP_FE(libvirt_domain_block_stats,NULL)
      PHP_FE(libvirt_domain_interface_stats,NULL)
      PHP_FE(libvirt_version,NULL)
+     PHP_FE(libvirt_domain_migrate, NULL)
+     PHP_FE(libvirt_domain_migrate_to_uri, NULL)
+#if LIBVIR_VERSION_NUMBER>=7007     
+     PHP_FE(libvirt_domain_get_job_info, NULL)
+#endif     
+
      {NULL, NULL, NULL}
 };
 
@@ -206,6 +212,22 @@ PHP_MINIT_FUNCTION(libvirt)
     REGISTER_LONG_CONSTANT("VIR_DOMAIN_MEMORY_STAT_UNUSED",4,CONST_CS | CONST_PERSISTENT);//	: * The total amount of usable memory as seen by the domain. This value * may be less than the amount of memory assigned to the domain if a * balloon driver is in use or if the guest OS does not initialize all * assigned pages. This value is expressed in kB. *
     REGISTER_LONG_CONSTANT("VIR_DOMAIN_MEMORY_STAT_AVAILABLE",5,CONST_CS | CONST_PERSISTENT);//	: * The number of statistics supported by this version of the interface. * To add new statistics, add them to the enum and increase this value. *
     REGISTER_LONG_CONSTANT("VIR_DOMAIN_MEMORY_STAT_NR",6,CONST_CS | CONST_PERSISTENT);//
+    
+    REGISTER_LONG_CONSTANT("VIR_DOMAIN_JOB_NONE",0,CONST_CS | CONST_PERSISTENT);	 // No job is active
+    REGISTER_LONG_CONSTANT("VIR_DOMAIN_JOB_BOUNDED",1,CONST_CS | CONST_PERSISTENT);	//Job with a finite completion time
+    REGISTER_LONG_CONSTANT("VIR_DOMAIN_JOB_UNBOUNDED",2,CONST_CS | CONST_PERSISTENT);	// Job without a finite completion time
+    REGISTER_LONG_CONSTANT("VIR_DOMAIN_JOB_COMPLETED",	3,CONST_CS | CONST_PERSISTENT);	// Job has finished, but isn't cleaned up
+    REGISTER_LONG_CONSTANT("VIR_DOMAIN_JOB_FAILED",4,CONST_CS | CONST_PERSISTENT);	//Job hit error, but isn't cleaned up
+    REGISTER_LONG_CONSTANT("VIR_DOMAIN_JOB_CANCELLED",5,CONST_CS | CONST_PERSISTENT);	// Job was aborted, but isn't cleaned up
+    
+    REGISTER_LONG_CONSTANT("VIR_MIGRATE_LIVE",1,CONST_CS | CONST_PERSISTENT);	// 	  live migration
+    REGISTER_LONG_CONSTANT("VIR_MIGRATE_PEER2PEER",2,CONST_CS | CONST_PERSISTENT);	// 	 direct source -> dest host control channel Note the less-common spelling that we're stuck with: VIR_MIGRATE_TUNNELLED should be VIR_MIGRATE_TUNNELED
+    REGISTER_LONG_CONSTANT("VIR_MIGRATE_TUNNELLED",4,CONST_CS | CONST_PERSISTENT);	// 	 tunnel migration data over libvirtd connection
+    REGISTER_LONG_CONSTANT("VIR_MIGRATE_PERSIST_DEST",8,CONST_CS | CONST_PERSISTENT);	// 	 persist the VM on the destination
+    REGISTER_LONG_CONSTANT("VIR_MIGRATE_UNDEFINE_SOURCE",16,CONST_CS | CONST_PERSISTENT);	// 	 undefine the VM on the source
+    REGISTER_LONG_CONSTANT("VIR_MIGRATE_PAUSED",32,CONST_CS | CONST_PERSISTENT);	// 	 pause on remote side
+    REGISTER_LONG_CONSTANT("VIR_MIGRATE_NON_SHARED_DISK",64,CONST_CS | CONST_PERSISTENT);	// 	 migration with non-shared storage with full disk copy
+    REGISTER_LONG_CONSTANT("VIR_MIGRATE_NON_SHARED_INC",128,CONST_CS | CONST_PERSISTENT);	// 	 migration with non-shared storage with incremental copy (same base image shared between source and destination)
     
 
     REGISTER_INI_ENTRIES();
@@ -1084,6 +1106,113 @@ PHP_FUNCTION(libvirt_version)
 					 
 	
 }
+
+
+
+
+PHP_FUNCTION(libvirt_domain_migrate_to_uri)
+{
+	 php_libvirt_domain *domain=NULL;
+	 zval *zdomain;
+	 int retval;
+	 long flags=0;
+	 int i;
+	 char *duri;
+	 int duri_len;
+	 char *dname;
+	 int dname_len;
+         long bandwith;	 
+	 	 	 
+	 
+	 dname=NULL;
+	 dname_len=0;
+	 bandwith=0;
+	 GET_DOMAIN_FROM_ARGS("rsl|sl",&zdomain,&duri,&duri_len,&flags,&dname,&dname_len,&bandwith);
+	 
+	 retval=virDomainMigrateToURI(domain->domain,duri,flags,dname,bandwith);
+	 
+	 if (retval == 0) RETURN_TRUE;
+	 RETURN_FALSE;
+	 
+
+	 
+}
+
+
+PHP_FUNCTION(libvirt_domain_migrate)
+{
+	 php_libvirt_domain *domain=NULL;
+	 zval *zdomain;
+	 
+	 php_libvirt_connection *dconn=NULL;
+	 zval *zdconn;
+	 
+	 virDomainPtr destdomain=NULL;
+	 php_libvirt_domain *res_domain;
+	 
+	 int retval;
+	 long flags=0;
+	 int i;
+	 char *dname;
+	 int dname_len;
+         long bandwith;
+         char *uri;
+         int uri_len;	 
+	 	 	 
+	 
+	 dname=NULL;
+	 dname_len=0;
+	 bandwith=0;
+	 uri_len=0;
+	 uri=NULL;
+	 GET_DOMAIN_FROM_ARGS("rrl|sl",&zdomain,&zdconn,&flags,&dname,&dname_len,&uri,&uri_len,&bandwith);
+	 ZEND_FETCH_RESOURCE(dconn, php_libvirt_connection*, &zdconn, -1, PHP_LIBVIRT_CONNECTION_RES_NAME, le_libvirt_connection);
+	  if ((dconn==NULL) || (dconn->conn==NULL)) RETURN_FALSE;
+	 
+	 destdomain=virDomainMigrate(domain->domain,dconn->conn,flags,dname,uri,bandwith);
+	 
+	 if (destdomain == NULL) RETURN_FALSE;
+	 
+	 res_domain= emalloc(sizeof(php_libvirt_domain));
+	 res_domain->domain = destdomain;
+         //CONNECTION_ADD_REF(res_domain->conn, dconn)
+ 	 ZEND_REGISTER_RESOURCE(return_value, res_domain, le_libvirt_domain);
+	 	 
+}
+
+  
+
+#if LIBVIR_VERSION_NUMBER>=7007
+PHP_FUNCTION(libvirt_domain_get_job_info)
+{
+	 php_libvirt_domain *domain=NULL;
+	 zval *zdomain;
+	 int retval;
+	 	 	 	 
+	 struct _virDomainJobInfo jobinfo;
+	  
+	 GET_DOMAIN_FROM_ARGS("r",&zdomain);
+	 
+	 retval=virDomainGetJobInfo(domain->domain,&jobinfo);
+	 
+	 if (retval == -1) RETURN_FALSE;
+	 
+	 array_init(return_value);
+         add_assoc_long(return_value, "type", jobinfo.type);	 
+	 add_assoc_long(return_value, "time_elapsed", jobinfo.timeElapsed);
+	 add_assoc_long(return_value, "time_remaining", jobinfo.timeRemaining);
+	 add_assoc_long(return_value, "data_total", jobinfo.dataTotal);
+	 add_assoc_long(return_value, "data_processed", jobinfo.dataProcessed);
+	 add_assoc_long(return_value, "data_remaining", jobinfo.dataRemaining);
+	 add_assoc_long(return_value, "mem_total", jobinfo.memTotal);
+	 add_assoc_long(return_value, "mem_processed", jobinfo.memProcessed);
+	 add_assoc_long(return_value, "mem_remaining", jobinfo.memRemaining);
+	 add_assoc_long(return_value, "file_total", jobinfo.fileTotal);
+	 add_assoc_long(return_value, "file_processed", jobinfo.fileProcessed);
+	 add_assoc_long(return_value, "file_remaining", jobinfo.fileRemaining);
+	 
+}
+#endif
 
 
 

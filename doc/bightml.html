@@ -351,6 +351,202 @@ been compiled into PHP or dynamically loaded at runtime.
     </dd>
 
    
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_DOMAIN_JOB_NONE</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_DOMAIN_JOB_BOUNDED</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_DOMAIN_JOB_UNBOUNDED</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_DOMAIN_JOB_COMPLETED</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_DOMAIN_JOB_FAILED</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_DOMAIN_JOB_CANCELLED</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_MIGRATE_LIVE</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_MIGRATE_PEER2PEER</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_MIGRATE_TUNNELLED</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_MIGRATE_PERSIST_DEST</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_MIGRATE_UNDEFINE_SOURCE</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_MIGRATE_PAUSED</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_MIGRATE_NON_SHARED_DISK</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
+   <dt class="varlistentry">
+
+    <span class="term">
+     <b><tt class="constant">VIR_MIGRATE_NON_SHARED_INC</tt></b>
+     (<a href="#language.types.integer" class="type integer">integer</a>)
+    </span>
+
+    </dt><dd class="listitem">
+
+     <span class="simpara">
+     </span>
+    </dd>
+
+   
   </dl>
 <p>
  </p>
@@ -1252,6 +1448,134 @@ Array
     <li class="member"><a href="#function.libvirt-domain-get-name" class="function" rel="rdfs-seeAlso">libvirt_domain_get_name()</a> - Get the public name for that domain</li>
     <li class="member"><a href="#function.libvirt-domain-get-uuid" class="function" rel="rdfs-seeAlso">libvirt_domain_get_uuid()</a> - Get the UUID for a domain as binary string.</li>
     <li class="member"><a href="#function.libvirt-domain-get-uuid-string" class="function" rel="rdfs-seeAlso">libvirt_domain_get_uuid_string()</a> - Get the UUID for a domain as string.</li>
+   </ul><p>
+  </p>
+ </div>
+
+
+</div><hr />
+
+
+
+
+
+
+<div id="function.libvirt-domain-get-job-info" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_domain_get_job_info</h1>
+  <p class="verinfo">(php-libvirt 0.4)</p><p class="refpurpose"><span class="refname">libvirt_domain_get_job_info</span> &mdash; <span class="dc-title">Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</span></p>
+
+ </div>
+
+
+
+ <a name="function.libvirt-domain-get-job-info.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">array</span> <span class="methodname"><b>libvirt_domain_get_job_info</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$domain</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+  Extract information about progress of a background job on a domain. Will return an error if the domain is not active. For exact description of returned values see <a href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainGetJobInfo" class="link external">&raquo; original documentation</a>.
+  </p>
+
+ <blockquote><p><b class="note">Note</b>: <b>Libvirt version</b><br />
+.
+This function has been added to Libvirt in version 0.7.7. You need this or newer version of Libvirt to be able to use this function..
+<br />
+</p></blockquote>
+
+
+ </div>
+
+
+ <a name="function.libvirt-domain-get-job-info.parameters"></a><div class="refsect1 parameters">
+  <h3 class="title">Parameters</h3>
+ <p class="para">
+   </p><dl>
+
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">domain</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Domain resource of domain to get job information of
+      </p>
+     </dd>
+
+    
+   </dl>
+<p>
+  </p>
+ </div>
+
+
+
+ <a name="function.libvirt-domain-get-job-info.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+   Associative array on success and <b><tt class="constant">FALSE</tt></b> on failure.
+  </p>
+ </div>
+
+
+<a name="function.libvirt-domain-get-job-info.examples"></a><div class="refsect1 examples">
+  <h3 class="title">Examples</h3>
+  <p class="para">
+   </p><div class="example">
+    <p><b>Example #1 <b>libvirt_domain_get_job_info()</b> example</b></p>
+    <div class="example-contents para"><p>
+    Get info about live migration of domain.
+    </p></div>
+    <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br />&nbsp;&nbsp;&nbsp;&nbsp;$dom</span><span style="color: #007700">=@</span><span style="color: #0000BB">libvirt_domain_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn</span><span style="color: #007700">,</span><span style="color: #DD0000">"f13_exper"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #0000BB">$dom</span><span style="color: #007700">==</span><span style="color: #0000BB">false</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Domain&nbsp;not&nbsp;found\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Libvirt&nbsp;last&nbsp;error:&nbsp;"</span><span style="color: #007700">.</span><span style="color: #0000BB">libvirt_get_last_error</span><span style="color: #007700">().</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Domain&nbsp;found\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Getting&nbsp;job&nbsp;info&nbsp;for&nbsp;the&nbsp;domain\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$info</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_domain_get_job_info</span><span style="color: #007700">(</span><span style="color: #0000BB">$dom</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+    <div class="example-contents para"><p>The above example will output 
+something similar to:</p></div>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+Domain found
+Getting job info for the domain
+Array
+(
+    [type] =&gt; 2
+    [time_elapsed] =&gt; 24036
+    [time_remaining] =&gt; 0
+    [data_total] =&gt; 554041344
+    [data_processed] =&gt; 244097024
+    [data_remaining] =&gt; 313507840
+    [mem_total] =&gt; 554041344
+    [mem_processed] =&gt; 244097024
+    [mem_remaining] =&gt; 313507840
+    [file_total] =&gt; 0
+    [file_processed] =&gt; 0
+    [file_remaining] =&gt; 0
+)
+
+</pre></div>
+    </div>
+   </div><p>
+  </p>
+ </div>
+
+
+
+
+ <a name="function.libvirt-domain-get-job-info.seealso"></a><div class="refsect1 seealso">
+  <h3 class="title">See Also</h3>
+  <p class="para">
+   </p><ul class="simplelist">
+    <li class="member"><a href="#function.libvirt-domain-migrate" class="function" rel="rdfs-seeAlso">libvirt_domain_migrate()</a> - Migrate the domain object from its current host to the destination host defined by a connection</li>
+    <li class="member"><a href="#function.libvirt-domain-migrate-to-uri" class="function" rel="rdfs-seeAlso">libvirt_domain_migrate_to_uri()</a> - Migrate the domain object from its current host to the destination host defined by URI</li>
    </ul><p>
   </p>
  </div>
@@ -2236,6 +2560,162 @@ This function has been added to Libvirt in version 0.7.5. You need this or newer
    </ul><p>
   </p>
  </div>
+
+</div><hr />
+
+
+
+
+
+
+<div id="function.libvirt-domain-migrate-to-uri" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_domain_migrate_to_uri</h1>
+  <p class="verinfo">(php-libvirt 0.4)</p><p class="refpurpose"><span class="refname">libvirt_domain_migrate_to_uri</span> &mdash; <span class="dc-title">Migrate the domain object from its current host to the destination host defined by URI</span></p>
+
+ </div>
+
+ <a name="function.libvirt-domain-migrate-to-uri.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">bool</span> <span class="methodname"><b>libvirt_domain_migrate_to_uri</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$domain</tt></span>
+   , <span class="methodparam"><span class="type">string</span> <tt class="parameter">$duri</tt></span>
+   , <span class="methodparam"><span class="type">int</span> <tt class="parameter">$flags</tt></span>
+   , <span class="methodparam"><span class="type">string</span> <tt class="parameter">$dname</tt></span>
+   , <span class="methodparam"><span class="type">string</span> <tt class="parameter">$uri</tt></span>
+   , <span class="methodparam"><span class="type">integer</span> <tt class="parameter">$bandwith</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+   Performs migration of the domain from one host to another. For description of parameters and flags see <a href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainMigrateToUri" class="link external">&raquo; original documentation</a>.
+  </p>
+  <p class="para">
+   Please note that the function returns after the migration is complete. It may take a lot of time to migrate a host. Be sure to configure PHP maximum execution time.
+  </p>
+
+ </div>
+
+
+ <a name="function.libvirt-domain-migrate-to-uri.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+   <b><tt class="constant">TRUE</tt></b>  on success and <b><tt class="constant">FALSE</tt></b> on failure.
+  </p>
+ </div>
+
+
+<a name="function.libvirt-domain-migrate-to-uri.examples"></a><div class="refsect1 examples">
+  <h3 class="title">Examples</h3>
+  <p class="para">
+   </p><div class="example">
+    <p><b>Example #1 <b>libvirt_domain_migrate_to_uri()</b> example</b></p>
+    <div class="example-contents para"><p>
+    Live migrate domain (f13_exper) to another node
+    </p></div>
+    <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">echo&nbsp;(</span><span style="color: #DD0000">"Looking&nbsp;up&nbsp;f13_exper&nbsp;domain\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$dom</span><span style="color: #007700">=@</span><span style="color: #0000BB">libvirt_domain_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn</span><span style="color: #007700">,</span><span style="color: #DD0000">"f13_exper"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #0000BB">$dom</span><span style="color: #007700">==</span><span style="color: #0000BB">false</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Domain&nbsp;not&nbsp;found\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Libvirt&nbsp;last&nbsp;error:&nbsp;"</span><span style="color: #007700">.</span><span style="color: #0000BB">libvirt_get_last_error</span><span style="color: #007700">().</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Domain&nbsp;found\n"</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Migrating&nbsp;domain&nbsp;to&nbsp;$duri\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$rv</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_domain_migrate_to_uri</span><span style="color: #007700">(</span><span style="color: #0000BB">$dom</span><span style="color: #007700">,</span><span style="color: #0000BB">$duri</span><span style="color: #007700">,</span><span style="color: #0000BB">VIR_MIGRATE_LIVE&nbsp;</span><span style="color: #007700">|&nbsp;</span><span style="color: #0000BB">VIR_MIGRATE_PEER2PEER&nbsp;</span><span style="color: #007700">|&nbsp;</span><span style="color: #0000BB">VIR_MIGRATE_PERSIST_DEST&nbsp;</span><span style="color: #007700">|&nbsp;</span><span style="color: #0000BB">VIR_MIGRATE_UNDEFINE_SOURCE</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #0000BB">$rv</span><span style="color: #007700">==</span><span style="color: #0000BB">false</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Failure!"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Libvirt&nbsp;last&nbsp;error:&nbsp;"</span><span style="color: #007700">.</span><span style="color: #0000BB">libvirt_get_last_error</span><span style="color: #007700">().</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;else<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Success\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+   </div><p>
+  </p>
+ </div>
+
+
+
+
+ <a name="function.libvirt-domain-migrate-to-uri.seealso"></a><div class="refsect1 seealso">
+  <h3 class="title">See Also</h3>
+  <p class="para">
+   </p><ul class="simplelist">
+    <li class="member"><a href="#function.libvirt-domain-migrate" class="function" rel="rdfs-seeAlso">libvirt_domain_migrate()</a> - Migrate the domain object from its current host to the destination host defined by a connection</li>
+    <li class="member"><a href="#function.libvirt-domain-get-job-info" class="function" rel="rdfs-seeAlso">libvirt_domain_get_job_info()</a> - Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li>
+   </ul><p>
+  </p>
+ </div>
+
+
+</div><hr />
+
+
+
+
+
+
+<div id="function.libvirt-domain-migrate" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_domain_migrate</h1>
+  <p class="verinfo">(php-libvirt 0.4)</p><p class="refpurpose"><span class="refname">libvirt_domain_migrate</span> &mdash; <span class="dc-title">Migrate the domain object from its current host to the destination host defined by a connection</span></p>
+
+ </div>
+
+ <a name="function.libvirt-domain-migrate.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">resource</span> <span class="methodname"><b>libvirt_domain_migrate</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$domain</tt></span>
+   , <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$dconn</tt></span>
+   , <span class="methodparam"><span class="type">int</span> <tt class="parameter">$flags</tt></span>
+   , <span class="methodparam"><span class="type">string</span> <tt class="parameter">$dname</tt></span>
+   , <span class="methodparam"><span class="type">string</span> <tt class="parameter">$uri</tt></span>
+   , <span class="methodparam"><span class="type">integer</span> <tt class="parameter">$bandwith</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+   Performs migration of the domain from one host to another. For description of parameters and flags see <a href="http://www.libvirt.org/html/libvirt-libvirt.html#virDomainMigrate" class="link external">&raquo; original documentation</a>.
+  </p>
+  <p class="para">
+   Please note that the function returns after the migration is complete. It may take a lot of time to migrate a host. Be sure to configure PHP maximum execution time.
+  </p>
+
+ </div>
+
+
+ <a name="function.libvirt-domain-migrate.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+   Resource to new domain  on success and <b><tt class="constant">FALSE</tt></b> on failure. Please note that the resource of the domain is in the context of dconn.
+  </p>
+ </div>
+
+
+<a name="function.libvirt-domain-migrate.examples"></a><div class="refsect1 examples">
+  <h3 class="title">Examples</h3>
+  <p class="para">
+   </p><div class="example">
+    <p><b>Example #1 <b>libvirt_domain_migrate()</b> example</b></p>
+    <div class="example-contents para"><p>
+    Live migrate domain (f13_exper) to another node
+    </p></div>
+    <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">echo&nbsp;(</span><span style="color: #DD0000">"Looking&nbsp;up&nbsp;f13_exper&nbsp;domain\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$dom</span><span style="color: #007700">=@</span><span style="color: #0000BB">libvirt_domain_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn</span><span style="color: #007700">,</span><span style="color: #DD0000">"f13_exper"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #0000BB">$dom</span><span style="color: #007700">==</span><span style="color: #0000BB">false</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Domain&nbsp;not&nbsp;found\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Libvirt&nbsp;last&nbsp;error:&nbsp;"</span><span style="color: #007700">.</span><span style="color: #0000BB">libvirt_get_last_error</span><span style="color: #007700">().</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Domain&nbsp;found\n"</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Connecting&nbsp;to&nbsp;libvirt&nbsp;(URI:$duri)\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$dconn</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_connect</span><span style="color: #007700">(</span><span style="color: #0000BB">$duri</span><span style="color: #007700">,</span><span style="color: #0000BB">false</span><span style="color: #007700">,</span><span style="color: #0000BB">$credentials</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #0000BB">$dconn</span><span style="color: #007700">==</span><span style="color: #0000BB">false</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Libvirt&nbsp;last&nbsp;error:&nbsp;"</span><span style="color: #007700">.</span><span style="color: #0000BB">libvirt_get_last_error</span><span style="color: #007700">().</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Connected\n"</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Migrating&nbsp;domain&nbsp;to&nbsp;$duri\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$ddom</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_domain_migrate</span><span style="color: #007700">(</span><span style="color: #0000BB">$dom</span><span style="color: #007700">,</span><span style="color: #0000BB">$dconn</span><span style="color: #007700">,</span><span style="color: #0000BB">VIR_MIGRATE_LIVE&nbsp;</span><span style="color: #007700">|&nbsp;</span><span style="color: #0000BB">VIR_MIGRATE_PEER2PEER&nbsp;</span><span style="color: #007700">|&nbsp;</span><span style="color: #0000BB">VIR_MIGRATE_PERSIST_DEST&nbsp;</span><span style="color: #007700">|&nbsp;</span><span style="color: #0000BB">VIR_MIGRATE_UNDEFINE_SOURCE</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #0000BB">$ddom</span><span style="color: #007700">==</span><span style="color: #0000BB">false</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Failure!"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Libvirt&nbsp;last&nbsp;error:&nbsp;"</span><span style="color: #007700">.</span><span style="color: #0000BB">libvirt_get_last_error</span><span style="color: #007700">().</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;else<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"Success\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;(</span><span style="color: #DD0000">"DDom&nbsp;is&nbsp;resource&nbsp;($ddom)&nbsp;to&nbsp;migrated&nbsp;domain&nbsp;in&nbsp;context&nbsp;of&nbsp;destination&nbsp;connection\n"</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+   </div><p>
+  </p>
+ </div>
+
+
+
+
+ <a name="function.libvirt-domain-migrate.seealso"></a><div class="refsect1 seealso">
+  <h3 class="title">See Also</h3>
+  <p class="para">
+   </p><ul class="simplelist">
+    <li class="member"><a href="#function.libvirt-domain-migrate-to-uri" class="function" rel="rdfs-seeAlso">libvirt_domain_migrate_to_uri()</a> - Migrate the domain object from its current host to the destination host defined by URI</li>
+    <li class="member"><a href="#function.libvirt-domain-get-job-info" class="function" rel="rdfs-seeAlso">libvirt_domain_get_job_info()</a> - Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li>
+   </ul><p>
+  </p>
+ </div>
+
 
 </div><hr />
 
@@ -3510,7 +3990,7 @@ Array
 
 
 
-<h2>Table of Contents</h2><ul class="chunklist chunklist_reference"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul>
+<h2>Table of Contents</h2><ul class="chunklist chunklist_reference"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-job-info">libvirt_domain_get_job_info</a> — Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-migrate-to-uri">libvirt_domain_migrate_to_uri</a> — Migrate the domain object from its current host to the destination host defined by URI</li><li><a href="#function.libvirt-domain-migrate">libvirt_domain_migrate</a> — Migrate the domain object from its current host to the destination host defined by a connection</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul>
 </div>
 <hr />
 
@@ -3518,4 +3998,4 @@ Array
 
 
 
-<ul class="chunklist chunklist_book"><li><a href="#intro.libvirt">Introduction</a></li><li><a href="#libvirt.setup">Installing/Configuring</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#libvirt.requirements">Requirements</a></li><li><a href="#libvirt.installation">Installation</a></li></ul></li><li><a href="#libvirt.constants">Predefined Constants</a></li><li><a href="#libvirt.examples">Examples</a></li><li><a href="#ref.libvirt">Libvirt Functions</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul></li></ul></div><hr /></body></html>
+<ul class="chunklist chunklist_book"><li><a href="#intro.libvirt">Introduction</a></li><li><a href="#libvirt.setup">Installing/Configuring</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#libvirt.requirements">Requirements</a></li><li><a href="#libvirt.installation">Installation</a></li></ul></li><li><a href="#libvirt.constants">Predefined Constants</a></li><li><a href="#libvirt.examples">Examples</a></li><li><a href="#ref.libvirt">Libvirt Functions</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-job-info">libvirt_domain_get_job_info</a> — Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-migrate-to-uri">libvirt_domain_migrate_to_uri</a> — Migrate the domain object from its current host to the destination host defined by URI</li><li><a href="#function.libvirt-domain-migrate">libvirt_domain_migrate</a> — Migrate the domain object from its current host to the destination host defined by a connection</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul></li></ul></div><hr /></body></html>
