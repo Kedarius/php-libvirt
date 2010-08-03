@@ -29,6 +29,14 @@ typedef struct _php_libvirt_domain {
     virDomainPtr domain;
 } php_libvirt_domain;
 
+typedef struct _php_libvirt_storagepool {
+    virStoragePoolPtr pool;
+} php_libvirt_storagepool;
+
+typedef struct _php_libvirt_volume {
+    virStorageVolPtr volume;
+} php_libvirt_volume;
+
 
 typedef struct _php_libvirt_cred_value {
 	int count;
@@ -38,8 +46,10 @@ typedef struct _php_libvirt_cred_value {
 } php_libvirt_cred_value;
 
 
-#define PHP_LIBVIRT_CONNECTION_RES_NAME "Libvrit connection"
-#define PHP_LIBVIRT_DOMAIN_RES_NAME "Libvrit domain"
+#define PHP_LIBVIRT_CONNECTION_RES_NAME "Libvirt connection"
+#define PHP_LIBVIRT_DOMAIN_RES_NAME "Libvirt domain"
+#define PHP_LIBVIRT_STORAGEPOOL_RES_NAME "Libvirt storagepool"
+#define PHP_LIBVIRT_VOLUME_RES_NAME "Libvirt volume"
 
 PHP_MINIT_FUNCTION(libvirt);
 PHP_MSHUTDOWN_FUNCTION(libvirt);
@@ -83,8 +93,15 @@ PHP_FUNCTION(libvirt_domain_memory_stats);
 PHP_FUNCTION(libvirt_domain_block_stats);
 PHP_FUNCTION(libvirt_domain_interface_stats);
 PHP_FUNCTION(libvirt_version);
+PHP_FUNCTION(libvirt_list_storagepools);
+PHP_FUNCTION(libvirt_storagepool_lookup_by_name);
+PHP_FUNCTION(libvirt_storagepool_list_volumes);
+PHP_FUNCTION(libvirt_storagepool_get_info);
+PHP_FUNCTION(libvirt_storagevolume_lookup_by_name);
+PHP_FUNCTION(libvirt_storagevolume_get_info);
+PHP_FUNCTION(libvirt_storagevolume_get_xml_desc);
+PHP_FUNCTION(libvirt_storagevolume_create_xml);
 
- 
 
 extern zend_module_entry libvirt_module_entry;
 #define phpext_libvirt_ptr &libvirt_module_entry

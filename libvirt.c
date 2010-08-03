@@ -9,9 +9,11 @@
 #include <libvirt/virterror.h>
 
 
-//----------------- ZEND thread safe per request globals definition 
+//----------------- ZEND thread safe per request globals definition
 int le_libvirt_connection;
-int le_libvirt_domain; 
+int le_libvirt_domain;
+int le_libvirt_storagepool;
+int le_libvirt_volume;
 
 ZEND_DECLARE_MODULE_GLOBALS(libvirt)
 
@@ -58,6 +60,15 @@ static function_entry libvirt_functions[] = {
      PHP_FE(libvirt_domain_block_stats,NULL)
      PHP_FE(libvirt_domain_interface_stats,NULL)
      PHP_FE(libvirt_version,NULL)
+
+     PHP_FE(libvirt_list_storagepools,NULL)
+     PHP_FE(libvirt_storagepool_lookup_by_name,NULL)
+     PHP_FE(libvirt_storagepool_list_volumes,NULL)
+     PHP_FE(libvirt_storagepool_get_info,NULL)
+     PHP_FE(libvirt_storagevolume_lookup_by_name,NULL)
+     PHP_FE(libvirt_storagevolume_get_info,NULL)
+     PHP_FE(libvirt_storagevolume_get_xml_desc,NULL)
+     PHP_FE(libvirt_storagevolume_create_xml,NULL)
      {NULL, NULL, NULL}
 };
 
@@ -88,7 +99,7 @@ ZEND_GET_MODULE(libvirt)
 PHP_INI_BEGIN()
 PHP_INI_END()
 
-//PHP requires to have this function defined 
+//PHP requires to have this function defined
 static void php_libvirt_init_globals(zend_libvirt_globals *libvirt_globals)
 {
 }
@@ -107,7 +118,7 @@ PHP_RSHUTDOWN_FUNCTION(libvirt)
     return SUCCESS;
 }
 
-//phpinfo() 
+//phpinfo()
 PHP_MINFO_FUNCTION(libvirt)
 {
 	unsigned long libVer;
@@ -116,15 +127,14 @@ PHP_MINFO_FUNCTION(libvirt)
         php_info_print_table_start();
         php_info_print_table_row(2, "Libvirt support", "enabled");
 	php_info_print_table_row(2, "Extension version", PHP_LIBVIRT_WORLD_VERSION);
-	
+
 	if (virGetVersion	(&libVer,NULL,&typeVer)== 0)
 	{
 		version=emalloc(100);
 		snprintf(version, 100, "%i.%i.%i", (long)((libVer/1000000) % 1000),(long)((libVer/1000) % 1000),(long)(libVer % 1000));
 		php_info_print_table_row(2, "Libvirt version", version);
 	}
-	
-	
+
         php_info_print_table_end();
 }
 
@@ -134,7 +144,6 @@ catch_error(void *userData, virErrorPtr error)
 	  php_error_docref(NULL TSRMLS_CC, E_WARNING,"%s",error->message);
 	  if (LIBVIRT_G (last_error)!=NULL) efree(LIBVIRT_G (last_error));
 	 LIBVIRT_G (last_error)=estrndup(error->message,strlen(error->message));
-	  
 }
 
 //Destructor for connection resource
@@ -149,14 +158,14 @@ static void php_libvirt_connection_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 			conn->conn=NULL;
 		}
 		efree(conn);
-	}		
+	}
 }
 
 //Destructor for domain resource
 static void php_libvirt_domain_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
 	php_libvirt_domain *domain = (php_libvirt_domain*)rsrc->ptr;
-	if (domain != NULL) 
+	if (domain != NULL)
 	{
 		if (domain->domain != NULL)
 		{
@@ -164,16 +173,50 @@ static void php_libvirt_domain_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 			domain->domain=NULL;
 		}
 		efree(domain);
-	}		
+	}
+
+}
+
+//Destructor for storagepool resource
+static void php_libvirt_storagepool_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
+{
+	php_libvirt_storagepool *pool = (php_libvirt_storagepool*)rsrc->ptr;
+	if (pool != NULL)
+	{
+		if (pool->pool != NULL)
+		{
+			virStoragePoolFree (pool->pool);
+			pool->pool=NULL;
+		}
+		efree(pool);
+	}
+
+}
+
+//Destructor for volume resource
+static void php_libvirt_volume_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
+{
+	php_libvirt_volume *volume = (php_libvirt_volume*)rsrc->ptr;
+	if (volume != NULL)
+	{
+		if (volume->volume != NULL)
+		{
+			virStorageVolFree (volume->volume);
+			volume->volume=NULL;
+		}
+		efree(volume);
+	}
 
 }
 
 //ZEND Module inicialization function
 PHP_MINIT_FUNCTION(libvirt)
 {
-	
     le_libvirt_connection = zend_register_list_destructors_ex(php_libvirt_connection_dtor, NULL, PHP_LIBVIRT_CONNECTION_RES_NAME, module_number);
     le_libvirt_domain = zend_register_list_destructors_ex(php_libvirt_domain_dtor, NULL, PHP_LIBVIRT_DOMAIN_RES_NAME, module_number);  //register resource types and theis descriptors
+    le_libvirt_storagepool = zend_register_list_destructors_ex(php_libvirt_storagepool_dtor, NULL, PHP_LIBVIRT_STORAGEPOOL_RES_NAME, module_number);
+    le_libvirt_volume = zend_register_list_destructors_ex(php_libvirt_volume_dtor, NULL, PHP_LIBVIRT_VOLUME_RES_NAME, module_number);
+
     ZEND_INIT_MODULE_GLOBALS(libvirt, php_libvirt_init_globals, NULL);
 
     //LIBVIRT CONSTANTS
@@ -187,7 +230,7 @@ PHP_MINIT_FUNCTION(libvirt)
     REGISTER_LONG_CONSTANT("VIR_DOMAIN_SHUTOFF", 5, CONST_CS | CONST_PERSISTENT);
     REGISTER_LONG_CONSTANT("VIR_DOMAIN_CRASHED", 6, CONST_CS | CONST_PERSISTENT);
     REGISTER_LONG_CONSTANT("VIR_MEMORY_VIRTUAL	", 1, CONST_CS | CONST_PERSISTENT);
-    
+
     REGISTER_LONG_CONSTANT("VIR_CRED_USERNAME",1, CONST_CS | CONST_PERSISTENT);//	 : Identity to act as
     REGISTER_LONG_CONSTANT("VIR_CRED_AUTHNAME",2,CONST_CS | CONST_PERSISTENT);//	: Identify to authorize as
     REGISTER_LONG_CONSTANT("VIR_CRED_LANGUAGE",3, CONST_CS | CONST_PERSISTENT);//	: RFC 1766 languages, comma separated
@@ -197,8 +240,7 @@ PHP_MINIT_FUNCTION(libvirt)
     REGISTER_LONG_CONSTANT("VIR_CRED_NOECHOPROMP",7, CONST_CS | CONST_PERSISTENT);//	: Challenge response
     REGISTER_LONG_CONSTANT("VIR_CRED_REALM",8, CONST_CS | CONST_PERSISTENT);//	: Authentication realm
     REGISTER_LONG_CONSTANT("VIR_CRED_EXTERNAL",9, CONST_CS | CONST_PERSISTENT);//	: Externally managed credential More may be added - expect the unexpected
-    
-     
+
     REGISTER_LONG_CONSTANT("VIR_DOMAIN_MEMORY_STAT_SWAP_IN",0,CONST_CS | CONST_PERSISTENT);//	 : The total amount of memory written out to swap space (in kB).
     REGISTER_LONG_CONSTANT("VIR_DOMAIN_MEMORY_STAT_SWAP_OUT",1, CONST_CS | CONST_PERSISTENT);//	: * Page faults occur when a process makes a valid access to virtual memory * that is not available. When servicing the page fault, if disk IO is * required, it is considered a major fault. If not, it is a minor fault. * These are expressed as the number of faults that have occurred. *
     REGISTER_LONG_CONSTANT("VIR_DOMAIN_MEMORY_STAT_MAJOR_FAULT",2, CONST_CS | CONST_PERSISTENT);//
@@ -206,10 +248,9 @@ PHP_MINIT_FUNCTION(libvirt)
     REGISTER_LONG_CONSTANT("VIR_DOMAIN_MEMORY_STAT_UNUSED",4,CONST_CS | CONST_PERSISTENT);//	: * The total amount of usable memory as seen by the domain. This value * may be less than the amount of memory assigned to the domain if a * balloon driver is in use or if the guest OS does not initialize all * assigned pages. This value is expressed in kB. *
     REGISTER_LONG_CONSTANT("VIR_DOMAIN_MEMORY_STAT_AVAILABLE",5,CONST_CS | CONST_PERSISTENT);//	: * The number of statistics supported by this version of the interface. * To add new statistics, add them to the enum and increase this value. *
     REGISTER_LONG_CONSTANT("VIR_DOMAIN_MEMORY_STAT_NR",6,CONST_CS | CONST_PERSISTENT);//
-    
 
     REGISTER_INI_ENTRIES();
-    
+
     //Initialize libvirt and set up error callback
     virInitialize();
     virSetErrorFunc(NULL, catch_error);
@@ -245,14 +286,28 @@ PHP_MSHUTDOWN_FUNCTION(libvirt)
 	  ZEND_FETCH_RESOURCE(domain, php_libvirt_domain*, &zdomain, -1, PHP_LIBVIRT_DOMAIN_RES_NAME, le_libvirt_domain);\
 	 if ((domain==NULL) || (domain->domain==NULL)) RETURN_FALSE;\
 
-	 
+#define GET_STORAGEPOOL_FROM_ARGS(args, ...) \
+	  if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, args, __VA_ARGS__) == FAILURE) {\
+		  RETURN_FALSE;\
+	  }\
+\
+	  ZEND_FETCH_RESOURCE(pool, php_libvirt_storagepool*, &zpool, -1, PHP_LIBVIRT_STORAGEPOOL_RES_NAME, le_libvirt_storagepool);\
+	 if ((pool==NULL) || (pool->pool==NULL)) RETURN_FALSE;\
+
+#define GET_VOLUME_FROM_ARGS(args, ...) \
+	  if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, args, __VA_ARGS__) == FAILURE) {\
+		  RETURN_FALSE;\
+	  }\
+\
+	  ZEND_FETCH_RESOURCE(volume, php_libvirt_volume*, &zvolume, -1, PHP_LIBVIRT_VOLUME_RES_NAME, le_libvirt_volume);\
+	 if ((volume==NULL) || (volume->volume==NULL)) RETURN_FALSE;\
+
 //Macro to "recreate" string with emalloc and free the original one
 #define RECREATE_STRING_WITH_E(str_out, str_in) \
 str_out = estrndup(str_in, strlen(str_in)); \
 	 free(str_in);	 \
 
-	 
-//Authentication callback function. Should receive list of credentials via cbdata and pass the requested one to libvirt	 
+//Authentication callback function. Should receive list of credentials via cbdata and pass the requested one to libvirt
 static int libvirt_virConnectAuthCallback(virConnectCredentialPtr cred,  unsigned int ncred,  void *cbdata)
 {
 	int i,j;
@@ -263,8 +318,8 @@ static int libvirt_virConnectAuthCallback(virConnectCredentialPtr cred,  unsigne
 		if (creds != NULL)
 			for (j=0;j<creds[0].count;j++)
 			{
-				if (creds[j].type==cred[i].type) 
-						{ 
+				if (creds[j].type==cred[i].type)
+						{
 							cred[i].resultlen=creds[j].resultlen;
 							cred[i].result=malloc(creds[j].resultlen);
 							strncpy(cred[i].result,creds[j].result,creds[j].resultlen);
@@ -571,7 +626,197 @@ PHP_FUNCTION(libvirt_get_last_error)
 
 
 
+// JP's C-gehobby
+PHP_FUNCTION(libvirt_list_storagepools)
+{
+	php_libvirt_connection *conn=NULL;
+	zval *zconn;
+	zval *zdomain;
+	int count=-1;
+	int maxids=-1;
+	int expectedcount=-1;
+	int *ids;
+	char **names;
+	int i;
 
+	GET_CONNECTION_FROM_ARGS("r",&zconn);
+
+	expectedcount=virConnectNumOfStoragePools(conn->conn);
+
+	names=emalloc(expectedcount*sizeof(char *));
+        count=virConnectListStoragePools(conn->conn,names,expectedcount);
+
+	if ((count != expectedcount) || (count<0)) RETURN_FALSE;
+	array_init(return_value);
+	for (i=0;i<count;i++)
+	{
+		 add_next_index_string(return_value,  names[i],1);
+                 free(names[i]);
+	}
+
+        efree(names);
+}
+
+PHP_FUNCTION(libvirt_storagepool_lookup_by_name)
+{
+
+         php_libvirt_connection *conn=NULL;
+         zval *zconn;
+         zval *zpool;
+         int name_len;
+         char *name=NULL;
+	 virStoragePoolPtr pool=NULL;
+         php_libvirt_storagepool *res_pool;
+
+         GET_CONNECTION_FROM_ARGS("rs",&zconn,&name,&name_len);
+
+         if ( (name == NULL) || (name_len<1)) RETURN_FALSE;
+         pool=virStoragePoolLookupByName   (conn->conn,name);
+         if (pool==NULL) RETURN_FALSE;
+
+         res_pool = emalloc(sizeof(php_libvirt_storagepool));
+         res_pool->pool = pool;
+
+         ZEND_REGISTER_RESOURCE(return_value, res_pool, le_libvirt_storagepool);
+}
+
+PHP_FUNCTION(libvirt_storagepool_list_volumes)
+{
+        php_libvirt_connection *conn=NULL;
+        php_libvirt_storagepool *pool=NULL;
+        zval *zconn;
+        zval *zpool;
+        char **names=NULL;
+	int expectedcount=-1;
+	int i;
+	int count=-1;
+
+        GET_STORAGEPOOL_FROM_ARGS("r",&zpool);
+
+	expectedcount=virStoragePoolNumOfVolumes (pool->pool);
+
+	names=emalloc(expectedcount*sizeof(char *));
+
+        count=virStoragePoolListVolumes(pool->pool,names,expectedcount);
+	array_init(return_value);
+
+	if ((count != expectedcount) || (count<0)) RETURN_FALSE;
+	for (i=0;i<count;i++)
+	{
+		 add_next_index_string(return_value,  names[i],1);
+               free(names[i]);
+	}
+
+       efree(names);
+}
+
+PHP_FUNCTION(libvirt_storagepool_get_info)
+{
+         php_libvirt_storagepool *pool=NULL;
+         zval *zpool;
+         virStoragePoolInfo poolInfo;
+         int retval;
+
+         GET_STORAGEPOOL_FROM_ARGS("r",&zpool);
+
+//	char buffer[50];
+//	sprintf( buffer, "%d", expectedcount );
+
+         retval=virStoragePoolGetInfo(pool->pool,&poolInfo);
+         if (retval != 0) RETURN_FALSE;
+
+         array_init(return_value);
+         add_assoc_long(return_value, "state", (long)poolInfo.state);
+         add_assoc_long(return_value, "capacity", poolInfo.capacity);
+         add_assoc_long(return_value, "allocation", poolInfo.allocation);
+         add_assoc_long(return_value, "available", poolInfo.available);
+}
+
+
+
+
+PHP_FUNCTION(libvirt_storagevolume_lookup_by_name)
+{
+         php_libvirt_connection *conn=NULL;
+	 php_libvirt_storagepool *pool=NULL;
+         php_libvirt_volume *res_volume;
+         zval *zconn;
+         zval *zpool;
+         zval *zvolume;
+         int name_len;
+         char *name=NULL;
+	 virStorageVolPtr volume=NULL;
+
+         GET_STORAGEPOOL_FROM_ARGS("rs",&zpool,&name,&name_len);
+
+
+         if ( (name == NULL) || (name_len<1)) RETURN_FALSE;
+         volume=virStorageVolLookupByName (pool->pool,name);
+         if (volume==NULL) RETURN_FALSE;
+
+         res_volume = emalloc(sizeof(php_libvirt_volume));
+         res_volume->volume = volume;
+
+         ZEND_REGISTER_RESOURCE(return_value, res_volume, le_libvirt_volume);
+}
+
+PHP_FUNCTION(libvirt_storagevolume_get_info)
+{
+         php_libvirt_volume *volume=NULL;
+         zval *zvolume;
+         virStorageVolInfo volumeInfo;
+         int retval;
+
+         GET_VOLUME_FROM_ARGS("r",&zvolume);
+
+         retval=virStorageVolGetInfo(volume->volume,&volumeInfo);
+         if (retval != 0) RETURN_FALSE;
+
+         array_init(return_value);
+         add_assoc_long(return_value, "type", (long)volumeInfo.type);
+         add_assoc_long(return_value, "capacity", volumeInfo.capacity);
+         add_assoc_long(return_value, "allocation", volumeInfo.allocation);
+}
+
+PHP_FUNCTION(libvirt_storagevolume_get_xml_desc)
+{
+         php_libvirt_volume *volume=NULL;
+         zval *zvolume;
+         char *xml;
+         char *xml_out;
+         long flags=0;
+
+         GET_VOLUME_FROM_ARGS("r|l",&zvolume,&flags);
+
+         xml=virStorageVolGetXMLDesc(volume->volume,flags);
+         if (xml==NULL) RETURN_FALSE;
+
+         RECREATE_STRING_WITH_E(xml_out,xml);
+
+         RETURN_STRING(xml_out,0);
+}
+
+//JPCURRENT
+PHP_FUNCTION(libvirt_storagevolume_create_xml)
+{
+         php_libvirt_volume *res_volume=NULL;
+	 php_libvirt_storagepool *pool=NULL;
+         zval *zpool;
+         virStorageVolPtr volume=NULL;
+         char *xml;
+         int xml_len;
+
+         GET_STORAGEPOOL_FROM_ARGS("rs",&zpool,&xml,&xml_len);
+
+         volume=virStorageVolCreateXML(pool->pool,xml,0);
+
+         if (volume==NULL) RETURN_FALSE;
+
+         res_volume= emalloc(sizeof(php_libvirt_volume));
+         res_volume->volume = volume;
+
+         ZEND_REGISTER_RESOURCE(return_value, res_volume, le_libvirt_volume);
+}
 
 PHP_FUNCTION(libvirt_list_domains)
 {
