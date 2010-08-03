@@ -626,7 +626,6 @@ PHP_FUNCTION(libvirt_get_last_error)
 
 
 
-// JP's C-gehobby
 PHP_FUNCTION(libvirt_list_storagepools)
 {
 	php_libvirt_connection *conn=NULL;
@@ -719,9 +718,6 @@ PHP_FUNCTION(libvirt_storagepool_get_info)
 
          GET_STORAGEPOOL_FROM_ARGS("r",&zpool);
 
-//	char buffer[50];
-//	sprintf( buffer, "%d", expectedcount );
-
          retval=virStoragePoolGetInfo(pool->pool,&poolInfo);
          if (retval != 0) RETURN_FALSE;
 
@@ -796,7 +792,6 @@ PHP_FUNCTION(libvirt_storagevolume_get_xml_desc)
          RETURN_STRING(xml_out,0);
 }
 
-//JPCURRENT
 PHP_FUNCTION(libvirt_storagevolume_create_xml)
 {
          php_libvirt_volume *res_volume=NULL;
