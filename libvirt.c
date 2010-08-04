@@ -722,6 +722,8 @@ PHP_FUNCTION(libvirt_storagepool_get_info)
          if (retval != 0) RETURN_FALSE;
 
          array_init(return_value);
+
+	 // @todo: fix the long long returns
          add_assoc_long(return_value, "state", (long)poolInfo.state);
          add_assoc_long(return_value, "capacity", poolInfo.capacity);
          add_assoc_long(return_value, "allocation", poolInfo.allocation);
@@ -769,6 +771,7 @@ PHP_FUNCTION(libvirt_storagevolume_get_info)
          if (retval != 0) RETURN_FALSE;
 
          array_init(return_value);
+	 // @todo: fix the long long returns
          add_assoc_long(return_value, "type", (long)volumeInfo.type);
          add_assoc_long(return_value, "capacity", volumeInfo.capacity);
          add_assoc_long(return_value, "allocation", volumeInfo.allocation);
