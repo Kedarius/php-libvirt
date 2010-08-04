@@ -467,10 +467,10 @@ PHP_FUNCTION(libvirt_node_get_info)
 
 	 GET_CONNECTION_FROM_ARGS("r",&zconn);
 
- 
+
 	  retval=virNodeGetInfo	(conn->conn,&info);
 	  if (retval==-1) RETURN_FALSE;
-	 
+
 	 array_init(return_value);
 	 add_assoc_string(return_value, "model", (long)info.model,1);
 	 add_assoc_long(return_value, "memory", (long)info.memory);
@@ -480,10 +480,10 @@ PHP_FUNCTION(libvirt_node_get_info)
 	 add_assoc_long(return_value, "cores", (long)info.cores);
 	 add_assoc_long(return_value, "threads", (long)info.threads);
 	 add_assoc_long(return_value, "mhz", (long)info.mhz);
-	 
-	  
-	    
-	  }
+
+
+
+}
 
 PHP_FUNCTION(libvirt_get_active_domain_count)
 {
