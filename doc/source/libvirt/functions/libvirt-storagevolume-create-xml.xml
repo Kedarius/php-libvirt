@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Revision: 1.28 $ -->
 
-<refentry xml:id="function.libvirt-storagevolume-get-xml-desc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<refentry xml:id="function.libvirt-storagevolume-create-xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>libvirt_storagevolume_create_xml</refname>
   <refpurpose>Create a new storage volume based on XML input</refpurpose>

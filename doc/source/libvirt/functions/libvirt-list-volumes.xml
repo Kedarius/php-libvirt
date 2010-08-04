@@ -87,7 +87,7 @@ array(3) {
    <simplelist>
     <member><function>libvirt_storagepool_lookup_by_name</function></member>
     <member><function>libvirt_storagepool_get_info</function></member>
-    <member><function>libvirt_storagepool_list_volumes</function></member>
+    <member><function>libvirt_list_storagepools</function></member>
    </simplelist>
   </para>
  </refsect1>

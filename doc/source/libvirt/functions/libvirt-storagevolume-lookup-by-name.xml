@@ -89,7 +89,7 @@ resource(3) of type (Libvirt storagevolume)
     <member><function>libvirt_storagevolume_get_info</function></member>
     <member><function>libvirt_storagevolume_get_xml_desc</function></member>
     <member><function>libvirt_storagevolume_create_xml</function></member>
-    <member><function>libvirt_storagepool_list_volumes</function></member>
+    <member><function>libvirt_list_volumes</function></member>
    </simplelist>
   </para>
  </refsect1>
