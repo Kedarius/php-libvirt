@@ -23,10 +23,13 @@ ZEND_END_MODULE_GLOBALS(libvirt)
 
 typedef struct _php_libvirt_connection {
     virConnectPtr conn;
+    unsigned int refcount;
+    long resource_id;
 } php_libvirt_connection;
 
 typedef struct _php_libvirt_domain {
     virDomainPtr domain;
+    php_libvirt_connection* conn;
 } php_libvirt_domain;
 
 
@@ -83,6 +86,7 @@ PHP_FUNCTION(libvirt_domain_memory_stats);
 PHP_FUNCTION(libvirt_domain_block_stats);
 PHP_FUNCTION(libvirt_domain_interface_stats);
 PHP_FUNCTION(libvirt_version);
+PHP_FUNCTION(libvirt_domain_get_connect);
 PHP_FUNCTION(libvirt_domain_migrate);
 #if LIBVIR_VERSION_NUMBER>=7007
 PHP_FUNCTION(libvirt_domain_get_job_info);
