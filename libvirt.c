@@ -120,11 +120,13 @@ ZEND_GET_MODULE(libvirt)
 
 //----------------- PHP init options
 PHP_INI_BEGIN()
+STD_PHP_INI_ENTRY("libvirt.longlong_to_string", "1", PHP_INI_ALL, OnUpdateBool, longlong_to_string_ini, zend_libvirt_globals, libvirt_globals)
 PHP_INI_END()
 
 //PHP requires to have this function defined 
 static void php_libvirt_init_globals(zend_libvirt_globals *libvirt_globals)
 {
+    libvirt_globals->longlong_to_string_ini = 1;
 }
 
 //PHP request initialization
@@ -303,6 +305,33 @@ str_out = estrndup(str_in, strlen(str_in)); \
 	 free(str_in);	 \
 
 	 
+
+#define LONGLONG_INIT \
+	char tmpnumber[64];
+
+#define LONGLONG_ASSOC(out,key,in) \
+	if (LIBVIRT_G(longlong_to_string_ini)) { \
+	  snprintf(tmpnumber,63,"%llu",in); \
+          add_assoc_string(out,key,tmpnumber,1); \
+        } \
+	else \
+	{ \
+	   add_assoc_long(out,key,in); \
+	}
+
+#define LONGLONG_INDEX(out,key,in) \
+	if (LIBVIRT_G(longlong_to_string_ini)) { \
+	  snprintf(tmpnumber,63,"%llu",in); \
+          add_index_string(out,key,tmpnumber,1); \
+        } \
+	else \
+	{ \
+           add_index_long(out, key,in); \
+	}
+
+
+
+
 //Authentication callback function. Should receive list of credentials via cbdata and pass the requested one to libvirt	 
 static int libvirt_virConnectAuthCallback(virConnectCredentialPtr cred,  unsigned int ncred,  void *cbdata)
 {
@@ -1058,11 +1087,11 @@ PHP_FUNCTION(libvirt_domain_memory_stats)
 	 retval=virDomainMemoryStats(domain->domain,stats,VIR_DOMAIN_MEMORY_STAT_NR,flags);
 	 
 	 if (retval == -1) RETURN_FALSE;
-	 
+	 LONGLONG_INIT
 	 array_init(return_value);
 	 for (i=0;i<retval;i++)
 	 {
-		 add_index_long(return_value, stats[i].tag,stats[i].val);
+		 LONGLONG_INDEX(return_value, stats[i].tag,stats[i].val)
 	 }
 	 
 	 
@@ -1088,11 +1117,12 @@ PHP_FUNCTION(libvirt_domain_block_stats)
 	 if (retval == -1) RETURN_FALSE;
 	 
 	 array_init(return_value);
-	 add_assoc_long(return_value, "rd_req", stats.rd_req);
-	 add_assoc_long(return_value, "rd_bytes", stats.rd_bytes);
-	 add_assoc_long(return_value, "wr_req", stats.wr_req);
-	 add_assoc_long(return_value, "wr_bytes", stats.wr_bytes);
-	 add_assoc_long(return_value, "errs", stats.errs);
+	 LONGLONG_INIT
+	 LONGLONG_ASSOC(return_value, "rd_req", stats.rd_req)
+	 LONGLONG_ASSOC(return_value, "rd_bytes", stats.rd_bytes);
+	 LONGLONG_ASSOC(return_value, "wr_req", stats.wr_req);
+	 LONGLONG_ASSOC(return_value, "wr_bytes", stats.wr_bytes);
+	 LONGLONG_ASSOC(return_value, "errs", stats.errs);
 }
 
 PHP_FUNCTION(libvirt_domain_interface_stats)
@@ -1114,14 +1144,15 @@ PHP_FUNCTION(libvirt_domain_interface_stats)
 	 if (retval == -1) RETURN_FALSE;
 	 
 	 array_init(return_value);
-	 add_assoc_long(return_value, "rx_bytes", stats.rx_bytes);
-	 add_assoc_long(return_value, "rx_packets", stats.rx_packets);
-	 add_assoc_long(return_value, "rx_errs", stats.rx_errs);
-	 add_assoc_long(return_value, "rx_drop", stats.rx_drop);
-	 add_assoc_long(return_value, "tx_bytes", stats.tx_bytes);
-	 add_assoc_long(return_value, "tx_packets", stats.tx_packets);
-	 add_assoc_long(return_value, "tx_errs", stats.tx_errs);
-	 add_assoc_long(return_value, "tx_drop", stats.tx_drop);
+	 LONGLONG_INIT
+	 LONGLONG_ASSOC(return_value, "rx_bytes", stats.rx_bytes);
+	 LONGLONG_ASSOC(return_value, "rx_packets", stats.rx_packets);
+	 LONGLONG_ASSOC(return_value, "rx_errs", stats.rx_errs);
+	 LONGLONG_ASSOC(return_value, "rx_drop", stats.rx_drop);
+	 LONGLONG_ASSOC(return_value, "tx_bytes", stats.tx_bytes);
+	 LONGLONG_ASSOC(return_value, "tx_packets", stats.tx_packets);
+	 LONGLONG_ASSOC(return_value, "tx_errs", stats.tx_errs);
+	 LONGLONG_ASSOC(return_value, "tx_drop", stats.tx_drop);
 	 
 }
 
@@ -1258,18 +1289,19 @@ PHP_FUNCTION(libvirt_domain_get_job_info)
 	 if (retval == -1) RETURN_FALSE;
 	 
 	 array_init(return_value);
+         LONGLONG_INIT
          add_assoc_long(return_value, "type", jobinfo.type);	 
-	 add_assoc_long(return_value, "time_elapsed", jobinfo.timeElapsed);
-	 add_assoc_long(return_value, "time_remaining", jobinfo.timeRemaining);
-	 add_assoc_long(return_value, "data_total", jobinfo.dataTotal);
-	 add_assoc_long(return_value, "data_processed", jobinfo.dataProcessed);
-	 add_assoc_long(return_value, "data_remaining", jobinfo.dataRemaining);
-	 add_assoc_long(return_value, "mem_total", jobinfo.memTotal);
-	 add_assoc_long(return_value, "mem_processed", jobinfo.memProcessed);
-	 add_assoc_long(return_value, "mem_remaining", jobinfo.memRemaining);
-	 add_assoc_long(return_value, "file_total", jobinfo.fileTotal);
-	 add_assoc_long(return_value, "file_processed", jobinfo.fileProcessed);
-	 add_assoc_long(return_value, "file_remaining", jobinfo.fileRemaining);
+	 LONGLONG_ASSOC(return_value, "time_elapsed", jobinfo.timeElapsed);
+	 LONGLONG_ASSOC(return_value, "time_remaining", jobinfo.timeRemaining);
+	 LONGLONG_ASSOC(return_value, "data_total", jobinfo.dataTotal);
+	 LONGLONG_ASSOC(return_value, "data_processed", jobinfo.dataProcessed);
+	 LONGLONG_ASSOC(return_value, "data_remaining", jobinfo.dataRemaining);
+	 LONGLONG_ASSOC(return_value, "mem_total", jobinfo.memTotal);
+	 LONGLONG_ASSOC(return_value, "mem_processed", jobinfo.memProcessed);
+	 LONGLONG_ASSOC(return_value, "mem_remaining", jobinfo.memRemaining);
+	 LONGLONG_ASSOC(return_value, "file_total", jobinfo.fileTotal);
+	 LONGLONG_ASSOC(return_value, "file_processed", jobinfo.fileProcessed);
+	 LONGLONG_ASSOC(return_value, "file_remaining", jobinfo.fileRemaining);
 	 
 }
 #endif

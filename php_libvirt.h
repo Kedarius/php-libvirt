@@ -9,6 +9,7 @@
 
 ZEND_BEGIN_MODULE_GLOBALS(libvirt)
 	char *last_error;
+	zend_bool longlong_to_string_ini;
 ZEND_END_MODULE_GLOBALS(libvirt)
 
 #ifdef ZTS
