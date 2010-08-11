@@ -3770,6 +3770,220 @@ Name:   node4
 
 
 
+<div id="function.libvirt-list-storagepools" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_list_storagepools</h1>
+  <p class="verinfo">(No version information available, might only be in CVS)</p><p class="refpurpose"><span class="refname">libvirt_list_storagepools</span> &mdash; <span class="dc-title">List all storagepools</span></p>
+
+ </div>
+
+ <a name="function.libvirt-list-storagepools.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">array</span> <span class="methodname"><b>libvirt_list_storagepools</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$connection</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+   This function returns array of storagepool names for the connection resource.  
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-list-storagepools.parameters"></a><div class="refsect1 parameters">
+  <h3 class="title">Parameters</h3>
+ <p class="para">
+   </p><dl>
+
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">connection</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Connection resource of hypervisor. 
+      </p>
+     </dd>
+
+    
+   </dl>
+<p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-list-storagepools.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+    Array of storagepool names. <b><tt class="constant">FALSE</tt></b> on failure
+  </p>
+ </div>
+
+
+ 
+
+ <a name="function.libvirt-list-storagepools.examples"></a><div class="refsect1 examples">
+  <h3 class="title">Examples</h3>
+  <p class="para">
+   </p><div class="example">
+    <p><b>Example #1 <b>libvirt_list_storagepools()</b> example</b></p>
+    <div class="example-contents para"><p>
+     List all storagepools
+    </p></div>
+    <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;$conn</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_connect</span><span style="color: #007700">(</span><span style="color: #0000BB">$uri</span><span style="color: #007700">,</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pools</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_list_storagepools</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$pools</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+    <div class="example-contents para"><p>The above example will output 
+something similar to:</p></div>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+array(2) {
+  [0]=&gt;
+  string(7) &quot;default&quot;
+  [1]=&gt;
+  string(4) &quot;data&quot;
+}
+</pre></div>
+    </div>
+   </div><p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-list-storagepools.seealso"></a><div class="refsect1 seealso">
+  <h3 class="title">See Also</h3>
+  <p class="para">
+   </p><ul class="simplelist">
+    <li class="member"><a href="#function.libvirt-storagepool-lookup-by-name" class="function" rel="rdfs-seeAlso">libvirt_storagepool_lookup_by_name()</a> - Lookup storagepool resource by name</li>
+    <li class="member"><a href="#function.libvirt-storagepool-get-info" class="function" rel="rdfs-seeAlso">libvirt_storagepool_get_info()</a> - Get storagepool information</li>
+    <li class="member"><a href="#function.libvirt-list-volumes" class="function" rel="rdfs-seeAlso">libvirt_list_volumes()</a> - List all volumes in a storagepool</li>
+   </ul><p>
+  </p>
+ </div>
+
+
+</div><hr />
+
+
+
+
+
+
+<div id="function.libvirt-list-volumes" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_list_volumes</h1>
+  <p class="verinfo">(No version information available, might only be in CVS)</p><p class="refpurpose"><span class="refname">libvirt_list_volumes</span> &mdash; <span class="dc-title">List all volumes in a storagepool</span></p>
+
+ </div>
+
+ <a name="function.libvirt-list-volumes.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">array</span> <span class="methodname"><b>libvirt_list_volumes</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$storagepool resource</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+   This function returns array of volume names in a storagepool.
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-list-volumes.parameters"></a><div class="refsect1 parameters">
+  <h3 class="title">Parameters</h3>
+ <p class="para">
+   </p><dl>
+
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">connection</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Storagepool reousrce. 
+      </p>
+     </dd>
+
+    
+   </dl>
+<p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-list-volumes.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+    Array of volume names. <b><tt class="constant">FALSE</tt></b> on failure
+  </p>
+ </div>
+
+
+ 
+
+ <a name="function.libvirt-list-volumes.examples"></a><div class="refsect1 examples">
+  <h3 class="title">Examples</h3>
+  <p class="para">
+   </p><div class="example">
+    <p><b>Example #1 <b>libvirt_list_volumes()</b> example</b></p>
+    <div class="example-contents para"><p>
+     List all volumes
+    </p></div>
+    <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;$conn</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_connect</span><span style="color: #007700">(</span><span style="color: #0000BB">$uri</span><span style="color: #007700">,</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pool</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_storagepools_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn</span><span style="color: #007700">,</span><span style="color: #DD0000">'default'</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$volumes</span><span style="color: #007700">=</span><span style="color: #0000BB">listvirt_list_volumes</span><span style="color: #007700">(</span><span style="color: #0000BB">$pool</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$volumes</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+    <div class="example-contents para"><p>The above example will output 
+something similar to:</p></div>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+array(3) {
+  [0]=&gt;
+  string(7) &quot;server1&quot;
+  [1]=&gt;
+  string(7) &quot;server2&quot;
+  [2]=&gt;
+  string(7) &quot;server3&quot;
+}
+</pre></div>
+    </div>
+   </div><p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-list-volumes.seealso"></a><div class="refsect1 seealso">
+  <h3 class="title">See Also</h3>
+  <p class="para">
+   </p><ul class="simplelist">
+    <li class="member"><a href="#function.libvirt-storagepool-lookup-by-name" class="function" rel="rdfs-seeAlso">libvirt_storagepool_lookup_by_name()</a> - Lookup storagepool resource by name</li>
+    <li class="member"><a href="#function.libvirt-storagepool-get-info" class="function" rel="rdfs-seeAlso">libvirt_storagepool_get_info()</a> - Get storagepool information</li>
+    <li class="member"><a href="#function.libvirt-list-storagepools" class="function" rel="rdfs-seeAlso">libvirt_list_storagepools()</a> - List all storagepools</li>
+   </ul><p>
+  </p>
+ </div>
+
+
+</div><hr />
+
+
+
+
+
+
 <div id="function.libvirt-node-get-info" class="refentry"><hr />
  <div class="refnamediv">
   <h1 class="refname">libvirt_node_get_info</h1>
@@ -3872,6 +4086,689 @@ something similar to:</p></div>
 </pre></div>
     </div>
    </div><p>
+  </p>
+ </div>
+
+
+</div><hr />
+
+
+
+
+
+
+<div id="function.libvirt-storagepool-get-info" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_storagepool_get_info</h1>
+  <p class="verinfo">(php-libvirt 0.4)</p><p class="refpurpose"><span class="refname">libvirt_storagepool_get_info</span> &mdash; <span class="dc-title">Get storagepool information</span></p>
+
+ </div>
+
+ <a name="function.libvirt-storagepool-get-info.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">array</span> <span class="methodname"><b>libvirt_storagepool_get_info</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$connection</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+   This function returns array containing storagepool information 
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagepool-get-info.parameters"></a><div class="refsect1 parameters">
+  <h3 class="title">Parameters</h3>
+ <p class="para">
+   </p><dl>
+
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">connection</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Connection resource of storagepool 
+      </p>
+     </dd>
+
+    
+   </dl>
+<p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagepool-get-info.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+    Array with storagepool information. <b><tt class="constant">FALSE</tt></b> on failure
+  </p>
+ </div>
+
+
+ 
+
+ <a name="function.libvirt-storagepool-get-info.examples"></a><div class="refsect1 examples">
+  <h3 class="title">Examples</h3>
+  <p class="para">
+   </p><div class="example">
+    <p><b>Example #1 <b>libvirt_storagepool_get_info()</b> example</b></p>
+    <div class="example-contents para"><p>
+     Connection resource of storagepool
+    </p></div>
+    <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;$conn</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_connect</span><span style="color: #007700">(</span><span style="color: #0000BB">$uri</span><span style="color: #007700">,</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pool</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_storagepools_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn</span><span style="color: #007700">,</span><span style="color: #DD0000">'default'</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$poolInfo&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">libvirt_storagepool_get_info</span><span style="color: #007700">(</span><span style="color: #0000BB">$pool</span><span style="color: #007700">)<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$poolInfo</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+    <div class="example-contents para"><p>The above example will output 
+something similar to:</p></div>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+array(4) {
+  [&quot;state&quot;]=&gt;
+  int(2)
+  [&quot;capacity&quot;]=&gt;
+  int(118996598784)
+  [&quot;allocation&quot;]=&gt;
+  int(34414264320)
+  [&quot;available&quot;]=&gt;
+  int(84582334464)
+}
+</pre></div>
+    </div>
+   </div><p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagepool-get-info.seealso"></a><div class="refsect1 seealso">
+  <h3 class="title">See Also</h3>
+  <p class="para">
+   </p><ul class="simplelist">
+    <li class="member"><a href="#function.libvirt-list-storagepools" class="function" rel="rdfs-seeAlso">libvirt_list_storagepools()</a> - List all storagepools</li>
+    <li class="member"><a href="#function.libvirt-storagepool-lookup-by-name" class="function" rel="rdfs-seeAlso">libvirt_storagepool_lookup_by_name()</a> - Lookup storagepool resource by name</li>
+    <li class="member"><a href="#function.libvirt-list-volumes" class="function" rel="rdfs-seeAlso">libvirt_list_volumes()</a> - List all volumes in a storagepool</li>
+   </ul><p>
+  </p>
+ </div>
+
+
+</div><hr />
+
+
+
+
+
+
+<div id="function.libvirt-storagepool-lookup-by-name" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_storagepool_lookup_by_name</h1>
+  <p class="verinfo">(php-libvirt 0.4)</p><p class="refpurpose"><span class="refname">libvirt_storagepool_lookup_by_name</span> &mdash; <span class="dc-title">Lookup storagepool resource by name</span></p>
+
+ </div>
+
+ <a name="function.libvirt-storagepool-lookup-by-name.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">array</span> <span class="methodname"><b>libvirt_storagepool_lookup_by_name</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$connection</tt></span>
+   , <span class="methodparam"><span class="type">string</span> <tt class="parameter">$storagepool name</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+   This function returns the storagepool resource for the given name.  
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagepool-lookup-by-name.parameters"></a><div class="refsect1 parameters">
+  <h3 class="title">Parameters</h3>
+ <p class="para">
+   </p><dl>
+
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">connection</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Connection resource of hypervisor. 
+      </p>
+     </dd>
+
+    
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">storagepool name</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Name of a storagepool
+      </p>
+     </dd>
+
+    
+   </dl>
+<p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagepool-lookup-by-name.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+    Storagepool resource identiefier. <b><tt class="constant">FALSE</tt></b> on failure
+  </p>
+ </div>
+
+
+ 
+
+ <a name="function.libvirt-storagepool-lookup-by-name.examples"></a><div class="refsect1 examples">
+  <h3 class="title">Examples</h3>
+  <p class="para">
+   </p><div class="example">
+    <p><b>Example #1 <b>libvirt_storagepool_lookup_by_name()</b> example</b></p>
+    <div class="example-contents para"><p>
+     Return storagepool resource identifier
+    </p></div>
+    <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;$conn</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_connect</span><span style="color: #007700">(</span><span style="color: #0000BB">$uri</span><span style="color: #007700">,</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pool</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_storagepool_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'default'</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$pool</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+    <div class="example-contents para"><p>The above example will output 
+something similar to:</p></div>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+resource(3) of type (Libvirt storagepool)
+</pre></div>
+    </div>
+   </div><p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagepool-lookup-by-name.seealso"></a><div class="refsect1 seealso">
+  <h3 class="title">See Also</h3>
+  <p class="para">
+   </p><ul class="simplelist">
+    <li class="member"><a href="#function.libvirt-list-storagepools" class="function" rel="rdfs-seeAlso">libvirt_list_storagepools()</a> - List all storagepools</li>
+    <li class="member"><a href="#function.libvirt-storagepool-get-info" class="function" rel="rdfs-seeAlso">libvirt_storagepool_get_info()</a> - Get storagepool information</li>
+    <li class="member"><a href="#function.libvirt-list-volumes" class="function" rel="rdfs-seeAlso">libvirt_list_volumes()</a> - List all volumes in a storagepool</li>
+   </ul><p>
+  </p>
+ </div>
+
+
+</div><hr />
+
+
+
+
+
+
+<div id="function.libvirt-storagevolume-create-xml" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_storagevolume_create_xml</h1>
+  <p class="verinfo">(php-libvirt 0.4)</p><p class="refpurpose"><span class="refname">libvirt_storagevolume_create_xml</span> &mdash; <span class="dc-title">Create a new storage volume based on XML input</span></p>
+
+ </div>
+
+ <a name="function.libvirt-storagevolume-create-xml.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">array</span> <span class="methodname"><b>libvirt_storagevolume_create_xml</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$storagepool resource</tt></span>
+   , <span class="methodparam"><span class="type">string</span> <tt class="parameter">$xml</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+   This function returns string containing volume information in XML format
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-create-xml.parameters"></a><div class="refsect1 parameters">
+  <h3 class="title">Parameters</h3>
+ <p class="para">
+   </p><dl>
+
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">storagepool resource</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Connection resource of the storagepool
+      </p>
+     </dd>
+
+    
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">xml</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       XML information to base the new volume on
+      </p>
+     </dd>
+
+    
+   </dl>
+<p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-create-xml.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+    Volume resource of the newly created volume. <b><tt class="constant">FALSE</tt></b> on failure
+  </p>
+ </div>
+
+
+ 
+
+ <a name="function.libvirt-storagevolume-create-xml.examples"></a><div class="refsect1 examples">
+  <h3 class="title">Examples</h3>
+  <p class="para">
+   </p><div class="example">
+    <p><b>Example #1 <b>libvirt_storagevolume_create_xmlc()</b> example</b></p>
+    <div class="example-contents para"><p>
+     Create a new volume in a storagepool
+    </p></div>
+    <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;$conn</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_connect</span><span style="color: #007700">(</span><span style="color: #0000BB">$uri</span><span style="color: #007700">,</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pool</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_storagepools_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn</span><span style="color: #007700">,</span><span style="color: #DD0000">'default'</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$xml&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"&lt;volume&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;volume2&lt;/name&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;key&gt;b10fa7e2-5e48-4c97-a7a0-42ca197d400c&lt;/key&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;capacity&nbsp;unit='M'&gt;100&lt;/capacity&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/volume&gt;"</span><span style="color: #007700">;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$volumeNew</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_storagevolume_create_xml</span><span style="color: #007700">(</span><span style="color: #0000BB">$pool</span><span style="color: #007700">,</span><span style="color: #0000BB">$xml</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$volumeNew</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+    <div class="example-contents para"><p>The above example will output 
+something similar to:</p></div>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+resource(3) of type (Libvirt volume)
+</pre></div>
+    </div>
+   </div><p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-create-xml.seealso"></a><div class="refsect1 seealso">
+  <h3 class="title">See Also</h3>
+  <p class="para">
+   </p><ul class="simplelist">
+    <li class="member"><a href="#function.libvirt-storagevolume-lookup-by-name" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_lookup_by_name()</a> - Lookup volume resource by name</li>
+    <li class="member"><a href="#function.libvirt-storagevolume-get-info" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_get_info()</a> - Get storagevolume information</li>
+    <li class="member"><a href="#function.libvirt-storagevolume-get-xml-desc" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_get_xml_desc()</a> - Get storagevolume information in XML format</li>
+   </ul><p>
+  </p>
+ </div>
+
+
+</div><hr />
+
+
+
+
+
+
+<div id="function.libvirt-storagevolume-get-info" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_storagevolume_get_info</h1>
+  <p class="verinfo">(php-libvirt 0.4)</p><p class="refpurpose"><span class="refname">libvirt_storagevolume_get_info</span> &mdash; <span class="dc-title">Get storagevolume information</span></p>
+
+ </div>
+
+ <a name="function.libvirt-storagevolume-get-info.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">array</span> <span class="methodname"><b>libvirt_storagevolume_get_info</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$volume resource</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+   This function returns array containing volume information 
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-get-info.parameters"></a><div class="refsect1 parameters">
+  <h3 class="title">Parameters</h3>
+ <p class="para">
+   </p><dl>
+
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">volume resource</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Connection resource of volume
+      </p>
+     </dd>
+
+    
+   </dl>
+<p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-get-info.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+    Array with volume information. <b><tt class="constant">FALSE</tt></b> on failure
+  </p>
+ </div>
+
+
+ 
+
+ <a name="function.libvirt-storagevolume-get-info.examples"></a><div class="refsect1 examples">
+  <h3 class="title">Examples</h3>
+  <p class="para">
+   </p><div class="example">
+    <p><b>Example #1 <b>libvirt_storagevolume_get_info()</b> example</b></p>
+    <div class="example-contents para"><p>
+     Array with volume information
+    </p></div>
+    <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;$conn</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_connect</span><span style="color: #007700">(</span><span style="color: #0000BB">$uri</span><span style="color: #007700">,</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pool</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_storagepools_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn</span><span style="color: #007700">,</span><span style="color: #DD0000">'default'</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$volume</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_storagevolume_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$pool</span><span style="color: #007700">,</span><span style="color: #DD0000">'volume1'</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$volumeInfo</span><span style="color: #007700">=</span><span style="color: #0000BB">libtvirt_storagevolume_get_info</span><span style="color: #007700">(</span><span style="color: #0000BB">$volue</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$volumeInfo</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+    <div class="example-contents para"><p>The above example will output 
+something similar to:</p></div>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+array(3) {
+  [&quot;type&quot;]=&gt;
+  int(1)
+  [&quot;capacity&quot;]=&gt;
+  int(2147483648)
+  [&quot;allocation&quot;]=&gt;
+  int(2147483648)
+}
+</pre></div>
+    </div>
+   </div><p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-get-info.seealso"></a><div class="refsect1 seealso">
+  <h3 class="title">See Also</h3>
+  <p class="para">
+   </p><ul class="simplelist">
+    <li class="member"><a href="#function.libvirt-storagevolume-lookup-by-name" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_lookup_by_name()</a> - Lookup volume resource by name</li>
+    <li class="member"><a href="#function.libvirt-storagevolume-get-xml-desc" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_get_xml_desc()</a> - Get storagevolume information in XML format</li>
+    <li class="member"><a href="#function.libvirt-storagevolume-create-xml" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_create_xml()</a> - Create a new storage volume based on XML input</li>
+   </ul><p>
+  </p>
+ </div>
+
+
+</div><hr />
+
+
+
+
+
+
+<div id="function.libvirt-storagevolume-get-xml-desc" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_storagevolume_get_xml_desc</h1>
+  <p class="verinfo">(php-libvirt 0.4)</p><p class="refpurpose"><span class="refname">libvirt_storagevolume_get_xml_desc</span> &mdash; <span class="dc-title">Get storagevolume information in XML format</span></p>
+
+ </div>
+
+ <a name="function.libvirt-storagevolume-get-xml-desc.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">array</span> <span class="methodname"><b>libvirt_storagevolume_get_xml_desc</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$volume resource</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+   This function returns string containing volume information in XML format
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-get-xml-desc.parameters"></a><div class="refsect1 parameters">
+  <h3 class="title">Parameters</h3>
+ <p class="para">
+   </p><dl>
+
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">volume resource</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Connection resource of volume
+      </p>
+     </dd>
+
+    
+   </dl>
+<p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-get-xml-desc.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+    String with volume information in XML format. <b><tt class="constant">FALSE</tt></b> on failure
+  </p>
+ </div>
+
+
+ 
+
+ <a name="function.libvirt-storagevolume-get-xml-desc.examples"></a><div class="refsect1 examples">
+  <h3 class="title">Examples</h3>
+  <p class="para">
+   </p><div class="example">
+    <p><b>Example #1 <b>libvirt_storagevolume_get_xml_desc()</b> example</b></p>
+    <div class="example-contents para"><p>
+     String with volume information in XML format
+    </p></div>
+    <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;$conn</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_connect</span><span style="color: #007700">(</span><span style="color: #0000BB">$uri</span><span style="color: #007700">,</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pool</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_storagepools_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn</span><span style="color: #007700">,</span><span style="color: #DD0000">'default'</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$volume</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_storagevolume_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$pool</span><span style="color: #007700">,</span><span style="color: #DD0000">'volume1'</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$volumeXML</span><span style="color: #007700">=</span><span style="color: #0000BB">libtvirt_storagevolume_get_xml_desc</span><span style="color: #007700">(</span><span style="color: #0000BB">$volume</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$volumeXML</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+    <div class="example-contents para"><p>The above example will output 
+something similar to:</p></div>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+string(451) &quot;&lt;volume&gt;
+  &lt;name&gt;volume1&lt;/name&gt;
+  &lt;key&gt;mQ3tpH-dAjE-IdHi-iafe-QElg-X2r7-Pv59e6&lt;/key&gt;
+  &lt;source&gt;
+    &lt;device path=&#039;/dev/sdb&#039;&gt;
+      &lt;extent start=&#039;27971813376&#039; end=&#039;30119297024&#039;/&gt;
+    &lt;/device&gt;
+  &lt;/source&gt;
+  &lt;capacity&gt;2147483648&lt;/capacity&gt;
+  &lt;allocation&gt;2147483648&lt;/allocation&gt;
+  &lt;target&gt;
+    &lt;path&gt;/dev/data/volume1&lt;/path&gt;
+    &lt;permissions&gt;
+      &lt;mode&gt;0660&lt;/mode&gt;
+      &lt;owner&gt;0&lt;/owner&gt;
+      &lt;group&gt;6&lt;/group&gt;
+    &lt;/permissions&gt;
+  &lt;/target&gt;
+&lt;/volume&gt;
+</pre></div>
+    </div>
+   </div><p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-get-xml-desc.seealso"></a><div class="refsect1 seealso">
+  <h3 class="title">See Also</h3>
+  <p class="para">
+   </p><ul class="simplelist">
+    <li class="member"><a href="#function.libvirt-storagevolume-lookup-by-name" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_lookup_by_name()</a> - Lookup volume resource by name</li>
+    <li class="member"><a href="#function.libvirt-storagevolume-get-info" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_get_info()</a> - Get storagevolume information</li>
+    <li class="member"><a href="#function.libvirt-storagevolume-create-xml" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_create_xml()</a> - Create a new storage volume based on XML input</li>
+   </ul><p>
+  </p>
+ </div>
+
+
+</div><hr />
+
+
+
+
+
+
+<div id="function.libvirt-storagevolume-lookup-by-name" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_storagevolume_lookup_by_name</h1>
+  <p class="verinfo">(php-libvirt 0.4)</p><p class="refpurpose"><span class="refname">libvirt_storagevolume_lookup_by_name</span> &mdash; <span class="dc-title">Lookup volume resource by name</span></p>
+
+ </div>
+
+ <a name="function.libvirt-storagevolume-lookup-by-name.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">array</span> <span class="methodname"><b>libvirt_storagevolume_lookup_by_name</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$connection</tt></span>
+   , <span class="methodparam"><span class="type">string</span> <tt class="parameter">$volume name</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+   This function returns the volume resource for the given name.  
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-lookup-by-name.parameters"></a><div class="refsect1 parameters">
+  <h3 class="title">Parameters</h3>
+ <p class="para">
+   </p><dl>
+
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">connection</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Connection resource of the storagepool. 
+      </p>
+     </dd>
+
+    
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">volume name</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Name of a volume
+      </p>
+     </dd>
+
+    
+   </dl>
+<p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-lookup-by-name.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+    Volume resource identiefier. <b><tt class="constant">FALSE</tt></b> on failure
+  </p>
+ </div>
+
+
+ 
+
+ <a name="function.libvirt-storagevolume-lookup-by-name.examples"></a><div class="refsect1 examples">
+  <h3 class="title">Examples</h3>
+  <p class="para">
+   </p><div class="example">
+    <p><b>Example #1 <b>libvirt_storagevolume_lookup_by_name()</b> example</b></p>
+    <div class="example-contents para"><p>
+     Return volume resource identifier
+    </p></div>
+    <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;$conn</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_connect</span><span style="color: #007700">(</span><span style="color: #0000BB">$uri</span><span style="color: #007700">,</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$pool</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_storagepool_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'default'</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$volume</span><span style="color: #007700">=</span><span style="color: #0000BB">libvirt_storagevolume_lookup_by_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$pool</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'volume1'</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$volume</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+    <div class="example-contents para"><p>The above example will output 
+something similar to:</p></div>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+resource(3) of type (Libvirt storagevolume)
+</pre></div>
+    </div>
+   </div><p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-storagevolume-lookup-by-name.seealso"></a><div class="refsect1 seealso">
+  <h3 class="title">See Also</h3>
+  <p class="para">
+   </p><ul class="simplelist">
+    <li class="member"><a href="#function.libvirt-storagevolume-get-info" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_get_info()</a> - Get storagevolume information</li>
+    <li class="member"><a href="#function.libvirt-storagevolume-get-xml-desc" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_get_xml_desc()</a> - Get storagevolume information in XML format</li>
+    <li class="member"><a href="#function.libvirt-storagevolume-create-xml" class="function" rel="rdfs-seeAlso">libvirt_storagevolume_create_xml()</a> - Create a new storage volume based on XML input</li>
+    <li class="member"><a href="#function.libvirt-list-volumes" class="function" rel="rdfs-seeAlso">libvirt_list_volumes()</a> - List all volumes in a storagepool</li>
+   </ul><p>
   </p>
  </div>
 
@@ -3990,7 +4887,7 @@ Array
 
 
 
-<h2>Table of Contents</h2><ul class="chunklist chunklist_reference"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-job-info">libvirt_domain_get_job_info</a> — Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-migrate-to-uri">libvirt_domain_migrate_to_uri</a> — Migrate the domain object from its current host to the destination host defined by URI</li><li><a href="#function.libvirt-domain-migrate">libvirt_domain_migrate</a> — Migrate the domain object from its current host to the destination host defined by a connection</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul>
+<h2>Table of Contents</h2><ul class="chunklist chunklist_reference"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-job-info">libvirt_domain_get_job_info</a> — Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-migrate-to-uri">libvirt_domain_migrate_to_uri</a> — Migrate the domain object from its current host to the destination host defined by URI</li><li><a href="#function.libvirt-domain-migrate">libvirt_domain_migrate</a> — Migrate the domain object from its current host to the destination host defined by a connection</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-list-storagepools">libvirt_list_storagepools</a> — List all storagepools</li><li><a href="#function.libvirt-list-volumes">libvirt_list_volumes</a> — List all volumes in a storagepool</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-storagepool-get-info">libvirt_storagepool_get_info</a> — Get storagepool information</li><li><a href="#function.libvirt-storagepool-lookup-by-name">libvirt_storagepool_lookup_by_name</a> — Lookup storagepool resource by name</li><li><a href="#function.libvirt-storagevolume-create-xml">libvirt_storagevolume_create_xml</a> — Create a new storage volume based on XML input</li><li><a href="#function.libvirt-storagevolume-get-info">libvirt_storagevolume_get_info</a> — Get storagevolume information</li><li><a href="#function.libvirt-storagevolume-get-xml-desc">libvirt_storagevolume_get_xml_desc</a> — Get storagevolume information in XML format</li><li><a href="#function.libvirt-storagevolume-lookup-by-name">libvirt_storagevolume_lookup_by_name</a> — Lookup volume resource by name</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul>
 </div>
 <hr />
 
@@ -3998,4 +4895,4 @@ Array
 
 
 
-<ul class="chunklist chunklist_book"><li><a href="#intro.libvirt">Introduction</a></li><li><a href="#libvirt.setup">Installing/Configuring</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#libvirt.requirements">Requirements</a></li><li><a href="#libvirt.installation">Installation</a></li></ul></li><li><a href="#libvirt.constants">Predefined Constants</a></li><li><a href="#libvirt.examples">Examples</a></li><li><a href="#ref.libvirt">Libvirt Functions</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-job-info">libvirt_domain_get_job_info</a> — Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-migrate-to-uri">libvirt_domain_migrate_to_uri</a> — Migrate the domain object from its current host to the destination host defined by URI</li><li><a href="#function.libvirt-domain-migrate">libvirt_domain_migrate</a> — Migrate the domain object from its current host to the destination host defined by a connection</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul></li></ul></div><hr /></body></html>
+<ul class="chunklist chunklist_book"><li><a href="#intro.libvirt">Introduction</a></li><li><a href="#libvirt.setup">Installing/Configuring</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#libvirt.requirements">Requirements</a></li><li><a href="#libvirt.installation">Installation</a></li></ul></li><li><a href="#libvirt.constants">Predefined Constants</a></li><li><a href="#libvirt.examples">Examples</a></li><li><a href="#ref.libvirt">Libvirt Functions</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-job-info">libvirt_domain_get_job_info</a> — Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-migrate-to-uri">libvirt_domain_migrate_to_uri</a> — Migrate the domain object from its current host to the destination host defined by URI</li><li><a href="#function.libvirt-domain-migrate">libvirt_domain_migrate</a> — Migrate the domain object from its current host to the destination host defined by a connection</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-list-storagepools">libvirt_list_storagepools</a> — List all storagepools</li><li><a href="#function.libvirt-list-volumes">libvirt_list_volumes</a> — List all volumes in a storagepool</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-storagepool-get-info">libvirt_storagepool_get_info</a> — Get storagepool information</li><li><a href="#function.libvirt-storagepool-lookup-by-name">libvirt_storagepool_lookup_by_name</a> — Lookup storagepool resource by name</li><li><a href="#function.libvirt-storagevolume-create-xml">libvirt_storagevolume_create_xml</a> — Create a new storage volume based on XML input</li><li><a href="#function.libvirt-storagevolume-get-info">libvirt_storagevolume_get_info</a> — Get storagevolume information</li><li><a href="#function.libvirt-storagevolume-get-xml-desc">libvirt_storagevolume_get_xml_desc</a> — Get storagevolume information in XML format</li><li><a href="#function.libvirt-storagevolume-lookup-by-name">libvirt_storagevolume_lookup_by_name</a> — Lookup volume resource by name</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul></li></ul></div><hr /></body></html>

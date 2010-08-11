@@ -33,5 +33,13 @@
 &reference.libvirt.functions.libvirt-list-active-domains;
 &reference.libvirt.functions.libvirt-list-defined-domains;
 &reference.libvirt.functions.libvirt-list-domains;
+&reference.libvirt.functions.libvirt-list-storagepools;
+&reference.libvirt.functions.libvirt-list-volumes;
 &reference.libvirt.functions.libvirt-node-get-info;
+&reference.libvirt.functions.libvirt-storagepool-get-info;
+&reference.libvirt.functions.libvirt-storagepool-lookup-by-name;
+&reference.libvirt.functions.libvirt-storagevolume-create-xml;
+&reference.libvirt.functions.libvirt-storagevolume-get-info;
+&reference.libvirt.functions.libvirt-storagevolume-get-xml-desc;
+&reference.libvirt.functions.libvirt-storagevolume-lookup-by-name;
 &reference.libvirt.functions.libvirt-version;

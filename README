@@ -17,3 +17,5 @@ Radek Hladík - r.hladik ( cybersales.cz )
 David King:
 libvirt_get_connect()
 
+Jan-Paul van Burgsteden:
+Implementation of storage pools and volumes 
