@@ -1,0 +1,19 @@
+PHP Libivrt READ ME
+-------------------
+
+1) Purpose of this project
+
+This project provides PHP language bindings for Libvirt API... PHP is a scripting language and Libvirt is virtalization framework/API.
+For more details see: http://phplibvirt.cybersales.cz/ http://www.libvirt.org/ http://www.php.net/
+
+2) Documentation
+Documentation is provided in doc/ directory
+
+3) Authors
+
+Radek Hladík - r.hladik ( cybersales.cz )
+
+
+David King:
+libvirt_get_connect()
+
