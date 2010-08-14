@@ -16,6 +16,11 @@
   <para>
    This function returns array containing volume information 
   </para>
+   <note><title>Warning</title>
+<para>.
+This function returns values that may be bigger than 32bit integer limit. Please read this <link linkend="libvirt.longlong">note</link> for more details.
+</para>
+</note>
  </refsect1>
 
  <refsect1 role="parameters">

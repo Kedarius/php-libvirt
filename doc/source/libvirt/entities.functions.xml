@@ -4,6 +4,7 @@
 &reference.libvirt.functions.libvirt-domain-create;
 &reference.libvirt.functions.libvirt-domain-define-xml;
 &reference.libvirt.functions.libvirt-domain-destroy;
+&reference.libvirt.functions.libvirt-domain-get-connect;
 &reference.libvirt.functions.libvirt-domain-get-id;
 &reference.libvirt.functions.libvirt-domain-get-info;
 &reference.libvirt.functions.libvirt-domain-get-job-info;

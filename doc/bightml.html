@@ -560,6 +560,48 @@ been compiled into PHP or dynamically loaded at runtime.
 
 
 <div><hr />
+ <h1>Interger ranges between libvirt and PHP</h1>
+
+  <p class="para">
+      This page address the integer range conflict between PHP and Libvirt. You should read this if you do use functions that could return numbers bigger than 2^31 (i.e. 2GB in case of functions returning bytes).
+  </p>
+  <p class="para">
+      Problem description: A lot of libvirt functions do return unsigned long long values (64bit unsigned). On the other hand, PHP  does use long for all integers. This means that the largest number on 32bit systems is 2147483647. In case of bytes it means only 2GB. What happen when you try to return larger number may vary a lot. It seems that on 64bit platforms PHP can handle 64 bit signed numbers but this is not confirmed.
+  </p>
+  <p class="para">
+      Because of this many functions will return possibly large numbers as string. As PHP uses implicit type conversion this is not a big issue (and you can disable it via <var class="filename">php.ini</var> option). You can encounter these basic situations:
+    </p><ol type="1">
+        <li class="listitem"><p class="para">If you need to output the value, you can safely print the string and there will be no difference</p></li>
+        <li class="listitem"><p class="para">If you are sure that the returned number is within the range, you can use it as number and PHP will cast it for you when needed</p></li>
+        <li class="listitem"><p class="para">If you are sure that your platform will handle 64bit numbers correctly, you can disable this behaviour via php.ini <span class="option">libvirt.longlong_to_string</span> option</p></li>
+        <li class="listitem"><p class="para">In all the other cases you can uses gm functions for multiprecision arithmetics. You will probably convert the string to gmp number, divide it and use as number.</p>
+ <div class="example">
+  <p><b>Example #1 Handling of large numbers using multiprecision library</b></p>
+  <div class="example-contents programlisting">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;suppose&nbsp;that&nbsp;we&nbsp;have&nbsp;number&nbsp;of&nbsp;I/O&nbsp;reads&nbsp;in&nbsp;$reads<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$reads_div_int</span><span style="color: #007700">=</span><span style="color: #0000BB">gmp_intval</span><span style="color: #007700">(</span><span style="color: #0000BB">gmp_div</span><span style="color: #007700">(</span><span style="color: #0000BB">$reads</span><span style="color: #007700">,</span><span style="color: #0000BB">1024</span><span style="color: #007700">))&nbsp;;&nbsp;&nbsp;</span><span style="color: #FF8000">//note&nbsp;the&nbsp;implicit&nbsp;convertsion&nbsp;from&nbsp;string&nbsp;to&nbsp;gmp_number.<br /></span><span style="color: #007700">}<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+  </div>
+
+</div>
+<p class="para">GMP does of course provide more arithmetic operations than division but converting bytes to kilobytes or megabytes is probably the most common operation.</p>
+</li>
+    </ol><p>
+</p>
+<p class="para">
+If you are sure that you platform can handle 64bit numbers and you do not want to use conversion to string, you can disable this behaviour in <var class="filename">php.ini</var> via option <span class="option">libvirt.longlong_to_string</span>. By default it is set to 1 (convert long long to string), setting it to 0 will force php-libvirt to return long long as long.
+</p> 
+</div>
+<hr />
+
+
+
+
+ 
+
+
+<div><hr />
  <h1>Examples</h1>
 
  <p class="para">
@@ -834,8 +876,8 @@ Resource id #6
 <p>
   </p>
    <blockquote><p><b class="note">Note</b>: <b>Warning</b><br />
- 
-This is the first implementation of this function in phplibvirt. There are some unsolved issues regarding integer ranges between PHP and Libvirt. We may change the beahviour of this function in future.
+.
+This function returns values that may be bigger than 32bit integer limit. Please read this <a href="#libvirt.longlong" class="link">note</a> for more details.
 <br />
 </p></blockquote>
  </div>
@@ -1266,6 +1308,73 @@ Array
 
 
 
+<div id="function.libvirt-domain-get-connect" class="refentry"><hr />
+ <div class="refnamediv">
+  <h1 class="refname">libvirt_domain_get_connect</h1>
+  <p class="verinfo">(php-libvirt 0.4)</p><p class="refpurpose"><span class="refname">libvirt_domain_get_connect</span> &mdash; <span class="dc-title">Returns connection resource for a domain</span></p>
+
+ </div>
+
+ <a name="function.libvirt-domain-get-connect.description"></a><div class="refsect1 description">
+  <h3 class="title">Description</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">resource</span> <span class="methodname"><b>libvirt_domain_get_connect</b></span>
+    ( <span class="methodparam"><span class="type">resource</span> <tt class="parameter">$domain</tt></span>
+   )</div>
+
+  <p class="para rdfs-comment">
+   Returns the connection resource for a domain.
+  </p>
+<blockquote><p><b class="note">Note</b>: <b>Notice</b><br />
+.
+You should not rely on this function. It is better to keep your own reference of the connections and domains.
+<br />
+</p></blockquote>
+
+ </div>
+
+
+ <a name="function.libvirt-domain-get-connect.parameters"></a><div class="refsect1 parameters">
+  <h3 class="title">Parameters</h3>
+ <p class="para">
+   </p><dl>
+
+    <dt class="varlistentry">
+
+     <span class="term"><i><tt class="parameter">domain</tt></i>
+</span>
+
+     </dt><dd class="listitem">
+
+      <p class="para">
+       Domain resource of domain to get connection resource.
+      </p>
+     </dd>
+
+    
+   </dl>
+<p>
+  </p>
+ </div>
+
+
+ <a name="function.libvirt-domain-get-connect.returnvalues"></a><div class="refsect1 returnvalues">
+  <h3 class="title">Return Values</h3>
+  
+  <p class="para">
+   <b><tt class="constant">FALSE</tt></b> on failure and connection resource on success.
+  </p>
+ </div>
+
+
+
+</div><hr />
+
+
+
+
+
+
 <div id="function.libvirt-domain-get-id" class="refentry"><hr />
  <div class="refnamediv">
   <h1 class="refname">libvirt_domain_get_id</h1>
@@ -1483,6 +1592,11 @@ Array
  <blockquote><p><b class="note">Note</b>: <b>Libvirt version</b><br />
 .
 This function has been added to Libvirt in version 0.7.7. You need this or newer version of Libvirt to be able to use this function..
+<br />
+</p></blockquote>
+<blockquote><p><b class="note">Note</b>: <b>Warning</b><br />
+.
+This function returns values that may be bigger than 32bit integer limit. Please read this <a href="#libvirt.longlong" class="link">note</a> for more details.
 <br />
 </p></blockquote>
 
@@ -1940,8 +2054,8 @@ Array
 <p>
   </p>
    <blockquote><p><b class="note">Note</b>: <b>Warning</b><br />
- 
-This is the first implementation of this function in phplibvirt. There are some unsolved issues regarding integer ranges between PHP and Libvirt. We may change the beahviour of this function in future.
+.
+This function returns values that may be bigger than 32bit integer limit. Please read this <a href="#libvirt.longlong" class="link">note</a> for more details.
 <br />
 </p></blockquote>
  </div>
@@ -2491,9 +2605,9 @@ Array
 <p>
    
    </p>
- <blockquote><p><b class="note">Note</b>: <b>Warning</b><br />
- 
-This is the first implementation of this function in phplibvirt. There are some unsolved issues regarding integer ranges between PHP and Libvirt. We may change the beahviour of this function in future.
+   <blockquote><p><b class="note">Note</b>: <b>Warning</b><br />
+.
+This function returns values that may be bigger than 32bit integer limit. Please read this <a href="#libvirt.longlong" class="link">note</a> for more details.
 <br />
 </p></blockquote>
  <blockquote><p><b class="note">Note</b>: <b>Libvirt version</b><br />
@@ -4114,6 +4228,11 @@ something similar to:</p></div>
   <p class="para rdfs-comment">
    This function returns array containing storagepool information 
   </p>
+   <blockquote><p><b class="note">Note</b>: <b>Warning</b><br />
+.
+This function returns values that may be bigger than 32bit integer limit. Please read this <a href="#libvirt.longlong" class="link">note</a> for more details.
+<br />
+</p></blockquote>
  </div>
 
 
@@ -4454,6 +4573,11 @@ resource(3) of type (Libvirt volume)
   <p class="para rdfs-comment">
    This function returns array containing volume information 
   </p>
+   <blockquote><p><b class="note">Note</b>: <b>Warning</b><br />
+.
+This function returns values that may be bigger than 32bit integer limit. Please read this <a href="#libvirt.longlong" class="link">note</a> for more details.
+<br />
+</p></blockquote>
  </div>
 
 
@@ -4887,7 +5011,7 @@ Array
 
 
 
-<h2>Table of Contents</h2><ul class="chunklist chunklist_reference"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-job-info">libvirt_domain_get_job_info</a> — Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-migrate-to-uri">libvirt_domain_migrate_to_uri</a> — Migrate the domain object from its current host to the destination host defined by URI</li><li><a href="#function.libvirt-domain-migrate">libvirt_domain_migrate</a> — Migrate the domain object from its current host to the destination host defined by a connection</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-list-storagepools">libvirt_list_storagepools</a> — List all storagepools</li><li><a href="#function.libvirt-list-volumes">libvirt_list_volumes</a> — List all volumes in a storagepool</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-storagepool-get-info">libvirt_storagepool_get_info</a> — Get storagepool information</li><li><a href="#function.libvirt-storagepool-lookup-by-name">libvirt_storagepool_lookup_by_name</a> — Lookup storagepool resource by name</li><li><a href="#function.libvirt-storagevolume-create-xml">libvirt_storagevolume_create_xml</a> — Create a new storage volume based on XML input</li><li><a href="#function.libvirt-storagevolume-get-info">libvirt_storagevolume_get_info</a> — Get storagevolume information</li><li><a href="#function.libvirt-storagevolume-get-xml-desc">libvirt_storagevolume_get_xml_desc</a> — Get storagevolume information in XML format</li><li><a href="#function.libvirt-storagevolume-lookup-by-name">libvirt_storagevolume_lookup_by_name</a> — Lookup volume resource by name</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul>
+<h2>Table of Contents</h2><ul class="chunklist chunklist_reference"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-connect">libvirt_domain_get_connect</a> — Returns connection resource for a domain</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-job-info">libvirt_domain_get_job_info</a> — Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-migrate-to-uri">libvirt_domain_migrate_to_uri</a> — Migrate the domain object from its current host to the destination host defined by URI</li><li><a href="#function.libvirt-domain-migrate">libvirt_domain_migrate</a> — Migrate the domain object from its current host to the destination host defined by a connection</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-list-storagepools">libvirt_list_storagepools</a> — List all storagepools</li><li><a href="#function.libvirt-list-volumes">libvirt_list_volumes</a> — List all volumes in a storagepool</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-storagepool-get-info">libvirt_storagepool_get_info</a> — Get storagepool information</li><li><a href="#function.libvirt-storagepool-lookup-by-name">libvirt_storagepool_lookup_by_name</a> — Lookup storagepool resource by name</li><li><a href="#function.libvirt-storagevolume-create-xml">libvirt_storagevolume_create_xml</a> — Create a new storage volume based on XML input</li><li><a href="#function.libvirt-storagevolume-get-info">libvirt_storagevolume_get_info</a> — Get storagevolume information</li><li><a href="#function.libvirt-storagevolume-get-xml-desc">libvirt_storagevolume_get_xml_desc</a> — Get storagevolume information in XML format</li><li><a href="#function.libvirt-storagevolume-lookup-by-name">libvirt_storagevolume_lookup_by_name</a> — Lookup volume resource by name</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul>
 </div>
 <hr />
 
@@ -4895,4 +5019,4 @@ Array
 
 
 
-<ul class="chunklist chunklist_book"><li><a href="#intro.libvirt">Introduction</a></li><li><a href="#libvirt.setup">Installing/Configuring</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#libvirt.requirements">Requirements</a></li><li><a href="#libvirt.installation">Installation</a></li></ul></li><li><a href="#libvirt.constants">Predefined Constants</a></li><li><a href="#libvirt.examples">Examples</a></li><li><a href="#ref.libvirt">Libvirt Functions</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-job-info">libvirt_domain_get_job_info</a> — Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-migrate-to-uri">libvirt_domain_migrate_to_uri</a> — Migrate the domain object from its current host to the destination host defined by URI</li><li><a href="#function.libvirt-domain-migrate">libvirt_domain_migrate</a> — Migrate the domain object from its current host to the destination host defined by a connection</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-list-storagepools">libvirt_list_storagepools</a> — List all storagepools</li><li><a href="#function.libvirt-list-volumes">libvirt_list_volumes</a> — List all volumes in a storagepool</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-storagepool-get-info">libvirt_storagepool_get_info</a> — Get storagepool information</li><li><a href="#function.libvirt-storagepool-lookup-by-name">libvirt_storagepool_lookup_by_name</a> — Lookup storagepool resource by name</li><li><a href="#function.libvirt-storagevolume-create-xml">libvirt_storagevolume_create_xml</a> — Create a new storage volume based on XML input</li><li><a href="#function.libvirt-storagevolume-get-info">libvirt_storagevolume_get_info</a> — Get storagevolume information</li><li><a href="#function.libvirt-storagevolume-get-xml-desc">libvirt_storagevolume_get_xml_desc</a> — Get storagevolume information in XML format</li><li><a href="#function.libvirt-storagevolume-lookup-by-name">libvirt_storagevolume_lookup_by_name</a> — Lookup volume resource by name</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul></li></ul></div><hr /></body></html>
+<ul class="chunklist chunklist_book"><li><a href="#intro.libvirt">Introduction</a></li><li><a href="#libvirt.setup">Installing/Configuring</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#libvirt.requirements">Requirements</a></li><li><a href="#libvirt.installation">Installation</a></li></ul></li><li><a href="#libvirt.constants">Predefined Constants</a></li><li><a href="#libvirt.longlong">Interger ranges between libvirt and PHP</a></li><li><a href="#libvirt.examples">Examples</a></li><li><a href="#ref.libvirt">Libvirt Functions</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="#function.libvirt-connect">libvirt_connect</a> — Get a connection to the Hypervisor</li><li><a href="#function.libvirt-domain-block-stats">libvirt_domain_block_stats</a> — provide block device statistics for the block device on domain.</li><li><a href="#function.libvirt-domain-create-xml">libvirt_domain_create_xml</a> — Launch a new guest domain, based on an XML description</li><li><a href="#function.libvirt-domain-create">libvirt_domain_create</a> — Launch a defined domain.</li><li><a href="#function.libvirt-domain-define-xml">libvirt_domain_define_xml</a> — Define a domain, but does not start it.</li><li><a href="#function.libvirt-domain-destroy">libvirt_domain_destroy</a> — Destroy the domain object</li><li><a href="#function.libvirt-domain-get-connect">libvirt_domain_get_connect</a> — Returns connection resource for a domain</li><li><a href="#function.libvirt-domain-get-id">libvirt_domain_get_id</a> — Get the hypervisor ID number for the domain</li><li><a href="#function.libvirt-domain-get-info">libvirt_domain_get_info</a> — Extract information about a domain</li><li><a href="#function.libvirt-domain-get-job-info">libvirt_domain_get_job_info</a> — Extract information about progress of a background job on a domain. Will return an error if the domain is not active.</li><li><a href="#function.libvirt-domain-get-name">libvirt_domain_get_name</a> — Get the public name for that domain</li><li><a href="#function.libvirt-domain-get-uuid-string">libvirt_domain_get_uuid_string</a> — Get the UUID for a domain as string.</li><li><a href="#function.libvirt-domain-get-uuid">libvirt_domain_get_uuid</a> — Get the UUID for a domain as binary string.</li><li><a href="#function.libvirt-domain-get-xml-desc">libvirt_domain_get_xml_desc</a> — Provide an XML description of the domain</li><li><a href="#function.libvirt-domain-interface-stats">libvirt_domain_interface_stats</a> — provide interface statistics for the virtual network interface on domain.</li><li><a href="#function.libvirt-domain-lookup-by-id">libvirt_domain_lookup_by_id</a> — Try to look up a domain based on the hypervisor ID number</li><li><a href="#function.libvirt-domain-lookup-by-name">libvirt_domain_lookup_by_name</a> — Try to look up a domain by its name.</li><li><a href="#function.libvirt-domain-lookup-by-uuid-string">libvirt_domain_lookup_by_uuid_string</a> — Try to look up a domain by its UUID (textual)</li><li><a href="#function.libvirt-domain-lookup-by-uuid">libvirt_domain_lookup_by_uuid</a> — Try to look up a domain by its UUID (binary)</li><li><a href="#function.libvirt-domain-memory-peek">libvirt_domain_memory_peek</a> — Read the contents of a domain's memory</li><li><a href="#function.libvirt-domain-memory-stats">libvirt_domain_memory_stats</a> — provide memory statistics for the domain.</li><li><a href="#function.libvirt-domain-migrate-to-uri">libvirt_domain_migrate_to_uri</a> — Migrate the domain object from its current host to the destination host defined by URI</li><li><a href="#function.libvirt-domain-migrate">libvirt_domain_migrate</a> — Migrate the domain object from its current host to the destination host defined by a connection</li><li><a href="#function.libvirt-domain-reboot">libvirt_domain_reboot</a> — Reboot a domain</li><li><a href="#function.libvirt-domain-resume">libvirt_domain_resume</a> — Resume an suspended domain</li><li><a href="#function.libvirt-domain-shutdown">libvirt_domain_shutdown</a> — Shutdown a domain</li><li><a href="#function.libvirt-domain-suspend">libvirt_domain_suspend</a> — Suspend a domain</li><li><a href="#function.libvirt-domain-undefine">libvirt_domain_undefine</a> — Undefine a domain</li><li><a href="#function.libvirt-get-active-domain-count">libvirt_get_active_domain_count</a> — Get the number of active domains.</li><li><a href="#function.libvirt-get-domain-count">libvirt_get_domain_count</a> — Get the number of all domains</li><li><a href="#function.libvirt-get-hostname">libvirt_get_hostname</a> — Get  hostname on which the hypervisor is running</li><li><a href="#function.libvirt-get-inactive-domain-count">libvirt_get_inactive_domain_count</a> — get the number of defined domains</li><li><a href="#function.libvirt-get-last-error">libvirt_get_last_error</a> — Get the last libvirt error</li><li><a href="#function.libvirt-list-active-domains">libvirt_list_active_domains</a> — Get active domains</li><li><a href="#function.libvirt-list-defined-domains">libvirt_list_defined_domains</a> — Get inactive domains</li><li><a href="#function.libvirt-list-domains">libvirt_list_domains</a> — List all domains</li><li><a href="#function.libvirt-list-storagepools">libvirt_list_storagepools</a> — List all storagepools</li><li><a href="#function.libvirt-list-volumes">libvirt_list_volumes</a> — List all volumes in a storagepool</li><li><a href="#function.libvirt-node-get-info">libvirt_node_get_info</a> — Extract hardware information about the node</li><li><a href="#function.libvirt-storagepool-get-info">libvirt_storagepool_get_info</a> — Get storagepool information</li><li><a href="#function.libvirt-storagepool-lookup-by-name">libvirt_storagepool_lookup_by_name</a> — Lookup storagepool resource by name</li><li><a href="#function.libvirt-storagevolume-create-xml">libvirt_storagevolume_create_xml</a> — Create a new storage volume based on XML input</li><li><a href="#function.libvirt-storagevolume-get-info">libvirt_storagevolume_get_info</a> — Get storagevolume information</li><li><a href="#function.libvirt-storagevolume-get-xml-desc">libvirt_storagevolume_get_xml_desc</a> — Get storagevolume information in XML format</li><li><a href="#function.libvirt-storagevolume-lookup-by-name">libvirt_storagevolume_lookup_by_name</a> — Lookup volume resource by name</li><li><a href="#function.libvirt-version">libvirt_version</a> — Get libvirt version</li></ul></li></ul></div><hr /></body></html>

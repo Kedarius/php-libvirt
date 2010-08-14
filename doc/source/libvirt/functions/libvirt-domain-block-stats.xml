@@ -32,8 +32,8 @@
 </table>
   </para>
    <note><title>Warning</title>
-<para> 
-This is the first implementation of this function in phplibvirt. There are some unsolved issues regarding integer ranges between PHP and Libvirt. We may change the beahviour of this function in future.
+<para>.
+This function returns values that may be bigger than 32bit integer limit. Please read this <link linkend="libvirt.longlong">note</link> for more details.
 </para>
 </note>
  </refsect1>

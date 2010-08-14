@@ -17,6 +17,7 @@
 
  &reference.libvirt.setup;
  &reference.libvirt.constants;
+ &reference.libvirt.longlong;
  &reference.libvirt.examples;
  &reference.libvirt.reference;
 

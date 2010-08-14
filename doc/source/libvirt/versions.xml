@@ -55,6 +55,7 @@ Example entries:
  <function name='libvirt-storagevolume-get-info' from='php-libvirt 0.4'/>
  <function name='libvirt-storagevolume-get-xml-desc' from='php-libvirt 0.4'/>
  <function name='libvirt-storagevolume-lookup-by-name' from='php-libvirt 0.4'/>
+ <function name='libvirt-domain-get-connect' from='php-libvirt 0.4'/>
 
 </versions>
 
