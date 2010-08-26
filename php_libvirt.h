@@ -24,7 +24,6 @@ ZEND_END_MODULE_GLOBALS(libvirt)
 
 typedef struct _php_libvirt_connection {
     virConnectPtr conn;
-    unsigned int refcount;
     long resource_id;
 } php_libvirt_connection;
 

@@ -9,32 +9,6 @@
 #include <libvirt/virterror.h>
 
 
-//Macro to add and remove references to/from a connection
-#define CONNECTION_CREATE(pointer) \
-    pointer = emalloc(sizeof(php_libvirt_connection)); \
-    pointer->refcount = 1;
-
-#define CONNECTION_ADD_REF(pointer, connptr) \
-    if(connptr != NULL) { \
-      connptr->refcount++; \
-    } \
-    pointer = connptr; \
-
-#define CONNECTION_DEL_REF(connptr) \
-    if(connptr != NULL) { \
-      if (connptr->refcount > 1) { \
-          connptr->refcount--; \
-          connptr = NULL; \
-      } \
-      else { \
-          if (connptr->conn != NULL) \
-          { \
-              virConnectClose (connptr->conn); \
-              connptr->conn=NULL; \
-          } \
-          efree(connptr); \
-      } \
-    } \
 
 //----------------- ZEND thread safe per request globals definition 
 int le_libvirt_connection;
@@ -177,31 +151,21 @@ catch_error(void *userData, virErrorPtr error)
 static void php_libvirt_connection_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
     php_libvirt_connection *conn = (php_libvirt_connection*)rsrc->ptr;
-    if (conn != NULL) 
-	{
-		CONNECTION_DEL_REF(conn)
-	}		
+    int rv;
+    rv = virConnectClose(conn->conn);
+    if (rv!=0)
+        php_error_docref(NULL TSRMLS_CC, E_WARNING,"virConnectClose failed with %i on destructor",rv);
+    conn->conn=NULL;
 }
 
 //Destructor for domain resource
 static void php_libvirt_domain_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
 	php_libvirt_domain *domain = (php_libvirt_domain*)rsrc->ptr;
-	if (domain != NULL) 
-	{
-		if (domain->domain != NULL)
-		{
-			virDomainFree (domain->domain);
-			domain->domain=NULL;
-		}
-		if (domain->conn != NULL)
-		{
-		    CONNECTION_DEL_REF(domain->conn)
-		}
-
-		efree(domain);
-	}		
-
+        int rv;
+	rv = virDomainFree (domain->domain);
+	if (rv != 0) { php_error_docref(NULL TSRMLS_CC, E_WARNING,"virDomainFree failed with %i on destructor",rv); }
+	domain->domain=NULL;
 }
 
 
@@ -408,7 +372,7 @@ PHP_FUNCTION(libvirt_connect)
 	   RETURN_FALSE;
    }
 
-    CONNECTION_CREATE(conn)    
+    conn=emalloc(sizeof(php_libvirt_connection));
     if (zcreds==NULL)
     {	//connecting without providing authentication
 	    if (readonly)
@@ -576,7 +540,8 @@ PHP_FUNCTION(libvirt_domain_lookup_by_name)
 	 res_domain= emalloc(sizeof(php_libvirt_domain));
 	 res_domain->domain = domain;
 
-         CONNECTION_ADD_REF(res_domain->conn, conn)
+         res_domain->conn=conn;
+        
 
 	 ZEND_REGISTER_RESOURCE(return_value, res_domain, le_libvirt_domain);
 }
@@ -600,7 +565,7 @@ PHP_FUNCTION(libvirt_domain_lookup_by_uuid)
 	 res_domain= emalloc(sizeof(php_libvirt_domain));
 	 res_domain->domain = domain;
 
-	 CONNECTION_ADD_REF(res_domain->conn, conn)
+	 res_domain->conn=conn;
 
 
 	 ZEND_REGISTER_RESOURCE(return_value, res_domain, le_libvirt_domain);
@@ -625,7 +590,7 @@ PHP_FUNCTION(libvirt_domain_lookup_by_uuid_string)
 	 res_domain= emalloc(sizeof(php_libvirt_domain));
 	 res_domain->domain = domain;
 
-	 CONNECTION_ADD_REF(res_domain->conn, conn)
+	 res_domain->conn=conn;
 
 	 ZEND_REGISTER_RESOURCE(return_value, res_domain, le_libvirt_domain);
 }
@@ -646,7 +611,7 @@ PHP_FUNCTION(libvirt_domain_lookup_by_id)
 	 
 	 res_domain= emalloc(sizeof(php_libvirt_domain));
 	 res_domain->domain = domain;
-	 CONNECTION_ADD_REF(res_domain->conn, conn)
+	 res_domain->conn= conn;
 
 
 	 ZEND_REGISTER_RESOURCE(return_value, res_domain, le_libvirt_domain);
@@ -696,7 +661,7 @@ PHP_FUNCTION(libvirt_list_domains)
 		      res_domain->domain = domain;
 
 		      ALLOC_INIT_ZVAL(zdomain);
-		      CONNECTION_ADD_REF(res_domain->conn, conn)
+		      res_domain->conn= conn;
 		      
 		      ZEND_REGISTER_RESOURCE(zdomain, res_domain, le_libvirt_domain);
 		      add_next_index_zval(return_value,  zdomain);
@@ -719,7 +684,7 @@ PHP_FUNCTION(libvirt_list_domains)
 		      res_domain->domain = domain;
 
 		      ALLOC_INIT_ZVAL(zdomain);
-                      CONNECTION_ADD_REF(res_domain->conn, conn)
+                      res_domain->conn=conn;
 		      
 		      ZEND_REGISTER_RESOURCE(zdomain, res_domain, le_libvirt_domain);
 		      add_next_index_zval(return_value,  zdomain);
@@ -1022,7 +987,7 @@ php_libvirt_domain *res_domain=NULL;
 	 res_domain= emalloc(sizeof(php_libvirt_domain));
 	 res_domain->domain = domain;
      
-         CONNECTION_ADD_REF(res_domain->conn, conn)
+         res_domain->conn=conn;
 
 	ZEND_REGISTER_RESOURCE(return_value, res_domain, le_libvirt_domain);
 }
@@ -1046,7 +1011,7 @@ PHP_FUNCTION(libvirt_domain_create_xml)
 	 res_domain= emalloc(sizeof(php_libvirt_domain));
 	 res_domain->domain = domain;
 
-	 CONNECTION_ADD_REF(res_domain->conn, conn)
+	 res_domain->conn=conn;
 
 	ZEND_REGISTER_RESOURCE(return_value, res_domain, le_libvirt_domain);
 }
@@ -1193,7 +1158,7 @@ PHP_FUNCTION(libvirt_domain_get_connect)
 
 	GET_DOMAIN_FROM_ARGS("r",&zdomain);
 
-	 CONNECTION_ADD_REF(conn, domain->conn)
+	 conn=domain->conn;
 	 if (conn->conn == NULL) RETURN_FALSE;
          RETURN_RESOURCE(conn->resource_id);
 }
@@ -1265,7 +1230,7 @@ PHP_FUNCTION(libvirt_domain_migrate)
 	 
 	 res_domain= emalloc(sizeof(php_libvirt_domain));
 	 res_domain->domain = destdomain;
-         CONNECTION_ADD_REF(res_domain->conn, dconn)
+         res_domain->conn=dconn;
 
  	 ZEND_REGISTER_RESOURCE(return_value, res_domain, le_libvirt_domain);
 	 	 
