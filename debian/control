@@ -1,7 +1,7 @@
 Source: php-libvirt
 Section: web
 Priority: optional
-Maintainer: Carsten Wolff <carsten@wolffcarsten.de>
+Maintainer: Andras Elso <elso.andras@gmail.com>
 Build-Depends: debhelper (>= 4.2), po-debconf, php5-dev (>= 5.1.1-1), libvirt-dev (>= 0.7.0)
 Standards-Version: 3.7.2.2
 
